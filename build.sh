@@ -1,0 +1,1 @@
+go build -ldflags="-X 'github.com/BitsOfAByte/marketxiv/cli.Version=$VERSION' -X 'github.com/BitsOfAByte/marketxiv/cli.BuildDate=$(date)' -X 'github.com/BitsOfAByte/marketxiv/cli.BuildBy=$(id -u -n)' -X 'github.com/BitsOfAByte/marketxiv/backend.Verbose=false'"

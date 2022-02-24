@@ -1,0 +1,8 @@
+# Binaries
+marketxiv
+*.exe
+
+# Secrets
+*.pem
+*.key
+*.env
