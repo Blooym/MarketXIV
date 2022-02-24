@@ -1,10 +1,12 @@
 package cli
 
 import (
-	"fmt"
+	"os"
+	"strconv"
 	"strings"
 
 	"github.com/BitsOfAByte/marketxiv/backend"
+	"github.com/olekukonko/tablewriter"
 )
 
 // Information about an item that is marketable.
@@ -14,30 +16,48 @@ type MarketItem struct {
 }
 
 // Get information about the item from the market.
-func (i MarketItem) Info() {
-	itemID := backend.FetchItem(i.ItemName).Results[0].ID
-	data := backend.FetchMarketItem(i.Server, itemID, 10)
+func (i MarketItem) ShowListings(limit int) {
 
-	if len(data.Listings) == 0 {
-		fmt.Println(fmt.Sprintf("marketxiv: No listings found for %s on %s.", i.ItemName, i.Server))
-		return
-	}
+	// TODO: Add checking for if the item doesnt exist.
 
-	// Print information about item
-	fmt.Println(fmt.Sprintf("Showing listings for %s (%d) on %s", strings.Title(strings.ToLower(i.ItemName)), data.ItemID, strings.Title(strings.ToLower(i.Server))))
-	fmt.Println(fmt.Sprintf("  %d listings found", len(data.Listings)))
-	fmt.Println(fmt.Sprintf("    Lowest: %d Gil | Highest: %d Gil | Average: %e Gil", data.MinPrice, data.MaxPrice, data.AveragePrice))
-	for _, listing := range data.Listings {
+	// Fetch the data for the item
+	itemData := backend.FetchItem(i.ItemName).Results[0]
+	marketItemData := backend.FetchMarketItem(i.Server, itemData.ID, limit)
+
+	// Prepare a table to display the data
+	listingData := make([][]string, len(marketItemData.Listings))
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"Quality", "Price", "Quantity", "Total", "Retainer", "World"})
+
+	// Loop through the listings and add them their data to the table
+	for _, listing := range marketItemData.Listings {
+
+		// Handle the quality boolean and convert it to a string.
 		var quality string
-		if listing.Hq {
-			quality = "High"
-		} else {
-			quality = "Regular"
+		switch listing.Hq {
+		case true:
+			quality = "HQ"
+		default:
+			quality = "NQ"
 		}
+
+		// When there is no world name, assume the world is only the server entered.
 		if listing.WorldName == "" {
-			fmt.Println(fmt.Sprintf("      (%v)  Quantity: %d | Total: %d Gil | Price-Per-Unit: %d Gil | Retainer: %s", quality, listing.Quantity, listing.Total, listing.PricePerUnit, listing.RetainerName))
-		} else {
-			fmt.Println(fmt.Sprintf("      (%v)  Quantity: %d | Total: %d Gil | Price-Per-Unit: %d Gil | Retainer: %s (%s)", quality, listing.Quantity, listing.Total, listing.PricePerUnit, listing.RetainerName, listing.WorldName))
+			listing.WorldName = strings.Title(strings.ToLower(i.Server))
 		}
+
+		// Add the listing to the table
+		listingData = append(listingData, []string{
+			quality,
+			strconv.Itoa(listing.PricePerUnit),
+			strconv.Itoa(listing.Quantity),
+			strconv.Itoa(listing.Total),
+			listing.RetainerName,
+			listing.WorldName,
+		})
 	}
+
+	// Show the table
+	table.AppendBulk(listingData)
+	table.Render()
 }

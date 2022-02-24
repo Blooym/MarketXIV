@@ -38,7 +38,7 @@ func ItemLookup() {
 	}
 
 	item := cli.MarketItem{strings.Join(os.Args[3:], " "), os.Args[2]}
-	item.Info()
+	item.ShowListings(10)
 }
 
 func MarketTax() {
