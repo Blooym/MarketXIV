@@ -16,7 +16,10 @@ func SendGetRequest(url string, params ...interface{}) []byte {
 	// Format params into query string
 	var queryString string
 	for _, param := range params {
-		queryString += fmt.Sprintf("%s&", param)
+		if strings.Contains(fmt.Sprintf("%v", param), " ") {
+			param = strings.Replace(fmt.Sprintf("%v", param), " ", "%20", -1)
+		}
+		queryString += fmt.Sprintf("%v&", param)
 	}
 
 	verboseLog(fmt.Sprintf("GET %s?%s", url, queryString))

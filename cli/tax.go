@@ -21,11 +21,11 @@ func (m Market) TaxRates() {
 
 	// Get the tax rates
 	taxData := backend.FetchTaxRates(m.Server)
-	taxServer := strings.Title(strings.ToLower(m.Server))
+	taxServer := strings.ToTitle(strings.ToLower(m.Server))
 
 	// If the starting cities have rates equal to zero then there is no tax data.
 	if taxData.LimsaLominsa == 0 && taxData.UlDah == 0 && taxData.Gridania == 0 {
-		fmt.Println(fmt.Sprintf("marketxiv: No tax rates found for %s.", taxServer))
+		fmt.Printf("marketxiv: No tax rates found for %s.", taxServer)
 		return
 	}
 

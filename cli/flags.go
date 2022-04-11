@@ -5,9 +5,9 @@ import (
 )
 
 var (
-	Version   string = "Development"
-	BuildDate string = "Unknown"
-	BuildBy   string = "Unknown"
+	Version   string = "Non-Direct Binary"
+	BuildDate string = "Non-Direct Binary"
+	BuildBy   string = "Non-Direct Binary"
 )
 
 func ShowHelpPage() {

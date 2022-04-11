@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -18,11 +19,21 @@ type MarketItem struct {
 // Get information about the item from the market.
 func (i MarketItem) ShowListings(limit int) {
 
-	// TODO: Add checking for if the item doesnt exist.
-
 	// Fetch the data for the item
-	itemData := backend.FetchItem(i.ItemName).Results[0]
+	itemApiResponse := backend.FetchItem(i.ItemName)
+
+	if len(itemApiResponse.Results) == 0 {
+		fmt.Printf("marketxiv: No listings found for %s.", i.ItemName)
+		return
+	}
+
+	itemData := itemApiResponse.Results[0]
 	marketItemData := backend.FetchMarketItem(i.Server, itemData.ID, limit)
+
+	if len(marketItemData.Listings) == 0 {
+		fmt.Printf("marketxiv: %s is not a marketable item.", i.ItemName)
+		return
+	}
 
 	// Prepare a table to display the data
 	listingData := make([][]string, len(marketItemData.Listings))
@@ -43,7 +54,7 @@ func (i MarketItem) ShowListings(limit int) {
 
 		// When there is no world name, assume the world is only the server entered.
 		if listing.WorldName == "" {
-			listing.WorldName = strings.Title(strings.ToLower(i.Server))
+			listing.WorldName = strings.ToTitle(strings.ToLower(i.Server))
 		}
 
 		// Add the listing to the table
@@ -59,5 +70,6 @@ func (i MarketItem) ShowListings(limit int) {
 
 	// Show the table
 	table.AppendBulk(listingData)
+	fmt.Printf("Showing listings for %s\n", i.ItemName)
 	table.Render()
 }
