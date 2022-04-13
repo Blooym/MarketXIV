@@ -2,10 +2,11 @@ package backend
 
 import (
 	"log"
+	"os"
+	"strings"
 )
 
-// Enables logger if true, disabled during production build if specified
-var Verbose string = "true"
+var Verbose string = strings.ToLower(os.Getenv("MXIV_VERBOSE"))
 
 // Logs a message if Verbose is true.
 func verboseLog(message string) {
