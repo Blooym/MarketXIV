@@ -23,7 +23,7 @@ func (m Market) TaxRates() {
 
 	// If the starting cities have rates equal to zero then there is no tax data.
 	if taxData.LimsaLominsa == 0 && taxData.UlDah == 0 && taxData.Gridania == 0 {
-		fmt.Printf("marketxiv: No tax rates found for %s.", taxServer)
+		fmt.Printf("No tax rates found for %s.", taxServer)
 		return
 	}
 

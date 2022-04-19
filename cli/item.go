@@ -23,7 +23,7 @@ func (i MarketItem) ShowListings(limit int) {
 	itemApiResponse := backend.FetchItem(i.ItemName)
 
 	if len(itemApiResponse.Results) == 0 {
-		fmt.Printf("marketxiv: No listings found for %s.", i.ItemName)
+		fmt.Printf("No listings found for %s.", i.ItemName)
 		return
 	}
 
@@ -31,7 +31,7 @@ func (i MarketItem) ShowListings(limit int) {
 	marketItemData := backend.FetchMarketItem(i.Server, itemData.ID, limit)
 
 	if len(marketItemData.Listings) == 0 {
-		fmt.Printf("marketxiv: %s is not a marketable item.", i.ItemName)
+		fmt.Printf("%s is not a marketable item.", i.ItemName)
 		return
 	}
 
