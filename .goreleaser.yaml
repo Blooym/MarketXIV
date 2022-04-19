@@ -1,0 +1,40 @@
+project_name: marketxiv
+before:
+  hooks:
+    - go mod tidy
+    - go generate ./...
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    ldflags:
+      - "-s -w -X 'github.com/BitsOfAByte/marketxiv/cli.WasBuilt=true'"
+      - "-s -w -X 'github.com/BitsOfAByte/marketxiv/cli.Version={{.Version}}'"
+      - "-s -w -X 'github.com/BitsOfAByte/marketxiv/cli.BuildDate={{.Date}}'"
+      - "-s -w -X 'github.com/BitsOfAByte/marketxiv/cli.RepoURL=https://github.com/BitsOfAByte/MarketXIV'"
+
+archives:
+  - format: zip
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+
+checksum:
+  name_template: "checksums.txt"
+
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+
+release:
+  github:
+    owner: BitsOfAByte
+    name: MarketXIV
+  prerelease: auto

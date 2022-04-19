@@ -4,12 +4,15 @@ import (
 	"fmt"
 )
 
+// Information about the binary
 var (
-	Version   string = "Non-Direct Binary"
-	BuildDate string = "Non-Direct Binary"
-	BuildBy   string = "Non-Direct Binary"
+	WasBuilt  string = "false"
+	Version   string = "N/A"
+	BuildDate string = "N/A"
+	RepoURL   string = "N/A"
 )
 
+// Shows the help text for the application.
 func ShowHelpPage() {
 	fmt.Println("MarketXIV Manual")
 	fmt.Println("  ==================")
@@ -26,13 +29,21 @@ func ShowHelpPage() {
 	fmt.Println("    --info, shows build info for marketxiv.")
 }
 
+// Prompts the user to try --help.
 func ShowQuickHelp() {
 	fmt.Println("marketxiv: try 'marketxiv --help' for more information.")
 }
 
+// Shows build information for the application.
 func ShowInfo() {
+
+	if WasBuilt != "true" {
+		fmt.Println("marketxiv: build information not available, most likely installed with 'go install'.")
+		return
+	}
+
 	fmt.Println("MarketXIV Build Information:")
 	fmt.Println("  Version: " + Version)
 	fmt.Println("  Build Date: " + BuildDate)
-	fmt.Println("  Build By: " + BuildBy)
+	fmt.Println("  Repository: " + RepoURL)
 }

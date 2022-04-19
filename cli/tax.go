@@ -1,5 +1,3 @@
-// Formatting and Handling of the raw market data from the API.
-
 package cli
 
 import (

@@ -1,6 +1,5 @@
-# Binaries
-marketxiv
-*.exe
+# Builds
+dist/
 
 # Secrets
 *.pem

@@ -1,7 +1,7 @@
-// Package structures contains the structures used by the API.
+// Structures used by the app to handle data
 package structures
 
-// ApiTaxRegions is the structure used to store the tax rates for a given server.
+// Format the data returned from the tax API
 type ApiTaxRegions struct {
 	LimsaLominsa int `json:"Limsa Lominsa"`
 	Gridania     int `json:"Gridania"`
@@ -12,7 +12,7 @@ type ApiTaxRegions struct {
 	OldSharlayan int `json:"Old Sharlayan"`
 }
 
-// ApiItem is the structure used to store information about an item.
+// Stucture the information returned about an in-game item
 type ApiItem struct {
 	Pagination struct {
 		Page           int         `json:"Page"`
@@ -35,7 +35,7 @@ type ApiItem struct {
 	SpeedMs int `json:"SpeedMs"`
 }
 
-// ApiMarketItem is the structure used to store information about an item on the market.
+// Structure data returned about an item on the in-game market.
 type ApiMarketItem struct {
 	ItemID         int   `json:"itemID"`
 	LastUploadTime int64 `json:"lastUploadTime"`
