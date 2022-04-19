@@ -27,18 +27,19 @@ func ShowHelpPage() {
 	fmt.Println("  Options:")
 	fmt.Println("    --help, shows this help page.")
 	fmt.Println("    --info, shows build info for marketxiv.")
+	fmt.Println("    --update, checks for / updates marketxiv to the latest version.")
 }
 
 // Prompts the user to try --help.
 func ShowQuickHelp() {
-	fmt.Println("marketxiv: try 'marketxiv --help' for more information.")
+	fmt.Println("Try 'marketxiv --help' for more information.")
 }
 
 // Shows build information for the application.
 func ShowInfo() {
 
 	if WasBuilt != "true" {
-		fmt.Println("marketxiv: build information not available, most likely installed with 'go install'.")
+		fmt.Println("Build information not available, most likely installed with 'go install'.")
 		return
 	}
 

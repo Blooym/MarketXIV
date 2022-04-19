@@ -5,6 +5,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/BitsOfAByte/marketxiv/backend"
 	"github.com/BitsOfAByte/marketxiv/cli"
 )
 
@@ -21,7 +22,13 @@ func main() {
 	case "--info":
 		cli.ShowInfo()
 	case "--update":
-		fmt.Println("Not implemented yet.")
+		/* If the version is N/A, it likely means the binary was installed with `go install`
+		In this case, the best bet is to just update the binary anyway to avoid future issues */
+		if cli.Version == "N/A" {
+			backend.Update("v0.0.0")
+		} else {
+			backend.Update(cli.Version)
+		}
 	case "item":
 		ItemLookup()
 	case "tax":
@@ -33,7 +40,7 @@ func main() {
 
 func ItemLookup() {
 	if len(os.Args) < 4 {
-		fmt.Println("marketxiv: specify a server and item name. Use --help for more information.")
+		fmt.Println("Specify a server and item name. Use --help for more information.")
 		return
 	}
 
@@ -43,7 +50,7 @@ func ItemLookup() {
 
 func MarketTax() {
 	if len(os.Args) < 3 {
-		fmt.Println("marketxiv: specify a server. Use --help for more information.")
+		fmt.Printf("Specify a server. Use --help for more information.")
 		return
 	}
 
