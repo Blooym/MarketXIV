@@ -11,28 +11,34 @@ import (
 	"github.com/BitsOfAByte/marketxiv/structures"
 )
 
-// Sends a GET request to the specified URL with the specified parameters and returns the response in byte format.
-func SendGetRequest(url string, params ...interface{}) []byte {
-	// Format params into query string
-	var queryString string
+// Formats a list of parameters into a query string.
+func formatParams(params ...interface{}) string {
+	var formattedParams string
+
 	for _, param := range params {
+
 		if strings.Contains(fmt.Sprintf("%v", param), " ") {
 			param = strings.Replace(fmt.Sprintf("%v", param), " ", "%20", -1)
 		}
-		queryString += fmt.Sprintf("%v&", param)
+
+		formattedParams += strings.ToLower(fmt.Sprintf("%v&", param))
 	}
+	return formattedParams
+}
+
+// GET data from the URL with params params, response is given as a Byte array.
+func SendGetRequest(url string, params ...interface{}) []byte {
+
+	queryString := formatParams(params...)
 
 	verboseLog(fmt.Sprintf("GET %s?%s", url, queryString))
 
-	// Send request
 	resp, err := http.Get(fmt.Sprintf("%s?%s", url, queryString))
 
-	// If there was an error, return it
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	// Read response body
 	defer resp.Body.Close()
 	bodyBytes, _ := ioutil.ReadAll(resp.Body)
 	return bodyBytes
