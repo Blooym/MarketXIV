@@ -26,7 +26,7 @@ func Update(version string) error {
 
 	// No update is available for the current version.
 	if latest.LessOrEqual(version) {
-		fmt.Printf("You currently have the latest version! (%s)", version)
+		fmt.Println("You currently have the latest version!")
 		return nil
 	}
 
@@ -43,7 +43,7 @@ func Update(version string) error {
 		return fmt.Errorf("error occurred while updating binary: %v", err)
 	}
 
-	fmt.Printf("Successfully updated to version %s (Arch: %s, OS: %s) ", latest.Version(), latest.Arch, latest.OS)
+	fmt.Println("Successfully updated to version", latest.Version(), latest.Arch, latest.OS)
 
 	return nil
 }

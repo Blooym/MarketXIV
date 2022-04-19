@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/BitsOfAByte/marketxiv/backend"
 	"github.com/olekukonko/tablewriter"
@@ -23,7 +24,7 @@ func (i MarketItem) ShowListings(limit int) {
 	itemApiResponse := backend.FetchItem(i.ItemName)
 
 	if len(itemApiResponse.Results) == 0 {
-		fmt.Printf("No listings found for %s.", i.ItemName)
+		fmt.Println("No listings found for", i.ItemName)
 		return
 	}
 
@@ -31,7 +32,7 @@ func (i MarketItem) ShowListings(limit int) {
 	marketItemData := backend.FetchMarketItem(i.Server, itemData.ID, limit)
 
 	if len(marketItemData.Listings) == 0 {
-		fmt.Printf("%s is not a marketable item.", i.ItemName)
+		fmt.Println(i.ItemName, "is not a marketable item.")
 		return
 	}
 
@@ -54,7 +55,7 @@ func (i MarketItem) ShowListings(limit int) {
 
 		// When there is no world name, assume the world is only the server entered.
 		if listing.WorldName == "" {
-			listing.WorldName = strings.ToTitle(strings.ToLower(i.Server))
+			listing.WorldName = strings.ToLower(i.Server)
 		}
 
 		// Add the listing to the table
@@ -70,6 +71,6 @@ func (i MarketItem) ShowListings(limit int) {
 
 	// Show the table
 	table.AppendBulk(listingData)
-	fmt.Printf("Showing listings for %s\n", i.ItemName)
+	fmt.Println("Showing listings for", i.ItemName, "| Uploaded:", time.Unix(marketItemData.LastUploadTime/1000, 0).Format(time.RFC1123))
 	table.Render()
 }

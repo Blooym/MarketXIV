@@ -50,7 +50,7 @@ func ItemLookup() {
 
 func MarketTax() {
 	if len(os.Args) < 3 {
-		fmt.Printf("Specify a server. Use --help for more information.")
+		fmt.Println("Specify a server. Use --help for more information.")
 		return
 	}
 
