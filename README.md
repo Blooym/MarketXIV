@@ -28,8 +28,16 @@ MarketXIV was created due to a lack of command line tools for getting market dat
 ### Go Install
 install Go on your system and then run the following command, which will install MarketXIV to wherever your GoPath binaries folder is located.
 ```
-go install github.com/BitsOfAByte/marketxiv@latest
+go install github.com/BitsOfAByte/marketxiv@latest 
 ```
+When using Go to install the app certain build-time flags will not be set which may cause the application to say there is an update available. Running the update command after installing via Go is recommended. 
 
-### Manual
+### GitHub Release
 Download the [newest release](https://github.com/BitsOfAByte/MarketXIV/releases/latest) and extract it somewhere inside of your system path, or alternatively add the executable to your path wherever you'd like it to be installed. [(Windows Path Guide)](https://www.maketecheasier.com/what-is-the-windows-path/) [(UNIX Path Guide)](https://www.computerhope.com/issues/ch001647.htm) 
+
+### Manual (Source)
+If you would like to build MarketXIV from source, install both Go & GoReleaser on to your system, then run the one-liner below:
+```
+git clone https://github.com/BitsOfAByte/MarketXIV && cd MarketXIV && goreleaser build --single-target --rm-dist --snapshot
+```
+You will find the compiled binary for your OS & Arch inside of the /dist folder. Please keep in mind building manually will create a snapshot version instead of a full release, but you can still update as usual. 
