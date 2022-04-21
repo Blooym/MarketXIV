@@ -62,8 +62,8 @@ func FetchItem(itemName string) structures.ApiItem {
 }
 
 // Fethces information about the given item from the market of the given server.
-func FetchMarketItem(server string, itemID int, limit int) structures.ApiMarketItem {
-	response := SendGetRequest(fmt.Sprintf("https://universalis.app/api/%s/%d", server, itemID), fmt.Sprintf("listings=%d", limit))
+func FetchMarketItem(server string, itemID int, limit int, hq string) structures.ApiMarketItem {
+	response := SendGetRequest(fmt.Sprintf("https://universalis.app/api/%s/%d", server, itemID), fmt.Sprintf("listings=%d&hq=%s", limit, hq))
 	var marketItemData structures.ApiMarketItem
 	json.Unmarshal(response, &marketItemData)
 	return marketItemData
