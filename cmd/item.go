@@ -24,64 +24,70 @@ var itemCmd = &cobra.Command{
 	Args:  cobra.MinimumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
 
-		server := args[0]
+		hq, _ := cmd.Flags().GetBool("hq")
+		limit, _ := cmd.Flags().GetInt("limit")
+
+		serverName := args[0]
 		itemName := strings.Join(args[1:], " ")
+		itemData := backend.FetchItem(itemName)
 
-		itemApiResponse := backend.FetchItem(itemName)
-
-		if len(itemApiResponse.Results) == 0 {
-			fmt.Println("No listings found for", itemName)
+		// Check to see if the item exists
+		if len(itemData.Results) == 0 {
+			fmt.Println("No results found for " + itemName)
 			return
 		}
 
-		itemData := itemApiResponse.Results[0]
-		marketItemData := backend.FetchMarketItem(server, itemData.ID, 10)
+		resultData := itemData.Results[0]
+		marketData := backend.FetchMarketItem(serverName, resultData.ID, limit, strconv.FormatBool(hq))
 
-		if len(marketItemData.Listings) == 0 {
-			fmt.Println(itemName, "is not a marketable item.")
+		if len(marketData.Listings) == 0 {
+			fmt.Println("No listings found for " + itemName)
 			return
 		}
 
-		// Prepare a table to display the data
-		listingData := make([][]string, len(marketItemData.Listings))
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetHeader([]string{"Quality", "Price", "Quantity", "Total", "Retainer", "World"})
+		table.SetFooter([]string{
+			"Information",
+			fmt.Sprintf("Item: %s", resultData.Name),
+			fmt.Sprintf("ID: %d", marketData.ItemID),
+			fmt.Sprintf("%v Shown", len(marketData.Listings)),
+			fmt.Sprintf("Avg Price: %v", marketData.AveragePrice),
+			time.Unix(marketData.LastUploadTime/1000, 0).Format("2006-01-02 15:04:05"),
+		})
 
-		// Loop through the listings and add them their data to the table
-		for _, listing := range marketItemData.Listings {
+		// Format and display the data
+		for _, listing := range marketData.Listings {
+			world := listing.WorldName
+			quality := strconv.FormatBool(listing.Hq)
 
-			// Handle the quality boolean and convert it to a string.
-			var quality string
-			switch listing.Hq {
-			case true:
-				quality = "HQ"
-			default:
-				quality = "NQ"
+			if world == "" {
+				world = serverName
 			}
 
-			// When there is no world name, assume the world is only the server entered.
-			if listing.WorldName == "" {
-				listing.WorldName = strings.ToLower(server)
+			if quality == "false" {
+				quality = "Normal"
+			} else {
+				quality = "High"
 			}
 
-			// Add the listing to the table
-			listingData = append(listingData, []string{
+			table.Append([]string{
 				quality,
 				strconv.Itoa(listing.PricePerUnit),
 				strconv.Itoa(listing.Quantity),
 				strconv.Itoa(listing.Total),
 				listing.RetainerName,
-				listing.WorldName,
+				world,
 			})
 		}
 
-		// Show the table
-		table.AppendBulk(listingData)
-		fmt.Println("Showing listings for", itemName, "| Uploaded:", time.Unix(marketItemData.LastUploadTime/1000, 0).Format(time.RFC1123))
 		table.Render()
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(itemCmd)
+
+	itemCmd.Flags().Bool("hq", false, "Only fetch high quality listings")
+	itemCmd.Flags().IntP("limit", "l", 5, "Limit the number of listings to show")
 }
