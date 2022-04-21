@@ -18,9 +18,9 @@ import (
 )
 
 // itemCmd represents the item command
-var itemCmd = &cobra.Command{
-	Use:   "item <server> <item>",
-	Short: "Get the current market listings for the specified item",
+var historyCmd = &cobra.Command{
+	Use:   "history <server> <item>",
+	Short: "Get historical market listings for the specified item",
 	Args:  cobra.MinimumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
 
@@ -31,7 +31,6 @@ var itemCmd = &cobra.Command{
 		itemName := strings.Join(args[1:], " ")
 		itemData := backend.FetchItem(itemName)
 
-		// Check to see if the item exists
 		if len(itemData.Results) == 0 {
 			fmt.Println("No results found for " + itemName)
 			return
@@ -46,24 +45,19 @@ var itemCmd = &cobra.Command{
 		}
 
 		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"Quality", "Price", "Quantity", "Total", "Retainer", "World"})
+		table.SetHeader([]string{"Quality", "Price", "Quantity", "Total", "Buyer", "Sold At"})
 		table.SetFooter([]string{
 			"Information",
 			fmt.Sprintf("Item: %s", resultData.Name),
 			fmt.Sprintf("ID: %d", marketData.ItemID),
 			fmt.Sprintf("%v Shown", len(marketData.Listings)),
-			fmt.Sprintf("Avg Price: %v", marketData.AveragePrice),
+			"",
 			time.Unix(marketData.LastUploadTime/1000, 0).Format("2006-01-02 15:04:05"),
 		})
 
 		// Format and display the data
-		for _, listing := range marketData.Listings {
-			world := listing.WorldName
+		for _, listing := range marketData.RecentHistory {
 			quality := strconv.FormatBool(listing.Hq)
-
-			if world == "" {
-				world = serverName
-			}
 
 			if quality == "false" {
 				quality = "Normal"
@@ -76,8 +70,8 @@ var itemCmd = &cobra.Command{
 				strconv.Itoa(listing.PricePerUnit),
 				strconv.Itoa(listing.Quantity),
 				strconv.Itoa(listing.Total),
-				listing.RetainerName,
-				world,
+				listing.BuyerName,
+				time.Unix(int64(listing.Timestamp), 0).Format("2006-01-02 15:04:05"),
 			})
 		}
 
@@ -86,8 +80,8 @@ var itemCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(itemCmd)
+	rootCmd.AddCommand(historyCmd)
 
-	itemCmd.Flags().Bool("hq", false, "Only fetch high quality listings")
-	itemCmd.Flags().IntP("limit", "l", 5, "Limit the number of listings to show")
+	historyCmd.Flags().Bool("hq", false, "Only fetch high quality listings")
+	historyCmd.Flags().IntP("limit", "l", 5, "Limit the number of listings to show")
 }
