@@ -1,4 +1,4 @@
-package backend
+andpackage backend
 
 import (
 	"fmt"
@@ -42,5 +42,5 @@ func Update(version string) string {
 		return fmt.Sprintf("Error occurred while updating binary: %v", err)
 	}
 
-	return fmt.Sprintf("Successfully updated to version %s (OS: %s, Arch: %s) from %s", latest.Version(), latest.Arch, latest.OS, latest.PublishedAt)
+	return fmt.Sprintf("Successfully updated to version %s (OS: %s, Arch: %s) from %s", latest.Version(), latest.OS, latest.Arch, latest.PublishedAt)
 }
