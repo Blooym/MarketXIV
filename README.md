@@ -33,7 +33,11 @@ go install github.com/BitsOfAByte/marketxiv@latest
 When using Go to install the app certain build-time flags will not be set which may cause the application to say there is an update available. Running the update command after installing via Go is recommended. 
 
 ### GitHub Release
-Download the [newest release](https://github.com/BitsOfAByte/MarketXIV/releases/latest) and extract it somewhere inside of your system path, or alternatively add the executable to your path wherever you'd like it to be installed. [(Windows Path Guide)](https://www.maketecheasier.com/what-is-the-windows-path/) [(UNIX Path Guide)](https://www.computerhope.com/issues/ch001647.htm) 
+Download the [newest release](https://github.com/BitsOfAByte/MarketXIV/releases/latest) and extract it somewhere inside of your system path, or alternatively add the executable to your path wherever you'd like it to be installed. [(Windows Path Guide)](https://www.maketecheasier.com/what-is-the-windows-path/) [(UNIX Path Guide)](https://www.computerhope.com/issues/ch001647.htm)
+
+If you are confused about what architecture to download, then you will most likely want `amd64` on Windows/Intel-Processor Macs/Linux, `arm64` on new M-Processor Macs and `arm` on RasberryPi. The updater tool will download for your architecture once installed. 
+
+*Some devices may use different architectures that are not listed here, it is best to check your processor info to confirm what you need to download*
 
 ### Manual (Source)
 If you would like to build MarketXIV from source, install both Go & GoReleaser on to your system, then run the one-liner below:
