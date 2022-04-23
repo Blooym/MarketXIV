@@ -19,9 +19,9 @@ import (
 
 // itemCmd represents the item command
 var listingsCmd = &cobra.Command{
-	Use:        "listings <server> <item>",
-	Short:      "Get the current market listings for the specified item",
-	Args:       cobra.MinimumNArgs(2),
+	Use:   "listings <server> <item>",
+	Short: "Get the current market listings for the specified item",
+	Args:  cobra.MinimumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
 
 		hq, _ := cmd.Flags().GetBool("hq")
@@ -48,7 +48,7 @@ var listingsCmd = &cobra.Command{
 		itemData := backend.FetchItem(resultData.ID)
 
 		if itemData.PriceMid <= marketData.Listings[0].PricePerUnit && itemData.PriceMid != 0 {
-			fmt.Println("Note: This item may be cheaper to be at a vendor instead of the market.")
+			fmt.Println("Note: This item may be cheaper to buy at a vendor instead of the market. Vendor Price: ", itemData.PriceMid)
 		}
 
 		table := tablewriter.NewWriter(os.Stdout)
