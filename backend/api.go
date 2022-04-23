@@ -53,9 +53,17 @@ func FetchTaxRates(server string) structures.ApiTaxRegions {
 	return taxRateData
 }
 
+// Searches for the given item from the API.
+func FetchSearch(query string, indexes ...string) structures.ApiSearchResult {
+	response := SendGetRequest("https://xivapi.com/search", fmt.Sprintf("string=%s", query), "limit=1", fmt.Sprintf("indexes=%s", strings.Join(indexes, ",")))
+	var itemData structures.ApiSearchResult
+	json.Unmarshal(response, &itemData)
+	return itemData
+}
+
 // Fetches information about the given item from the API.
-func FetchItem(itemName string) structures.ApiItem {
-	response := SendGetRequest("https://xivapi.com/search", fmt.Sprintf("string=%s", itemName), "limit=1")
+func FetchItem(itemID int) structures.ApiItem {
+	response := SendGetRequest(fmt.Sprintf("https://xivapi.com/item/%v", itemID))
 	var itemData structures.ApiItem
 	json.Unmarshal(response, &itemData)
 	return itemData

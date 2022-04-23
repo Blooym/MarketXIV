@@ -18,10 +18,11 @@ import (
 )
 
 // itemCmd represents the item command
-var historyCmd = &cobra.Command{
-	Use:   "history <server> <item>",
-	Short: "Get historical market listings for the specified item",
-	Args:  cobra.MinimumNArgs(2),
+var listingsCmd = &cobra.Command{
+	Use:        "listings <server> <item>",
+	Deprecated: "Use 'history' instead",
+	Short:      "Get the current market listings for the specified item",
+	Args:       cobra.MinimumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
 
 		hq, _ := cmd.Flags().GetBool("hq")
@@ -29,8 +30,9 @@ var historyCmd = &cobra.Command{
 
 		serverName := args[0]
 		itemName := strings.Join(args[1:], " ")
-		searchData := backend.FetchSearch(itemName)
+		searchData := backend.FetchSearch(itemName, "item")
 
+		// Check to see if the item exists
 		if len(searchData.Results) == 0 {
 			fmt.Println("No results found for " + itemName)
 			return
@@ -44,8 +46,14 @@ var historyCmd = &cobra.Command{
 			return
 		}
 
+		itemData := backend.FetchItem(resultData.ID)
+
+		if itemData.PriceMid <= marketData.Listings[0].PricePerUnit && itemData.PriceMid != 0 {
+			fmt.Println("Note: This item may be cheaper to be at a vendor instead of the market.")
+		}
+
 		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"Quality", "Price", "Quantity", "Total", "Buyer", "Sold At"})
+		table.SetHeader([]string{"Quality", "Price", "Quantity", "Total", "Retainer", "World"})
 		table.SetFooter([]string{
 			fmt.Sprintf("%s (%d)", resultData.Name, marketData.ItemID),
 			fmt.Sprintf("Avg: %v", marketData.AveragePrice),
@@ -56,8 +64,13 @@ var historyCmd = &cobra.Command{
 		})
 
 		// Format and display the data
-		for _, listing := range marketData.RecentHistory {
+		for _, listing := range marketData.Listings {
+			world := listing.WorldName
 			quality := strconv.FormatBool(listing.Hq)
+
+			if world == "" {
+				world = serverName
+			}
 
 			if quality == "false" {
 				quality = "Normal"
@@ -70,8 +83,8 @@ var historyCmd = &cobra.Command{
 				strconv.Itoa(listing.PricePerUnit),
 				strconv.Itoa(listing.Quantity),
 				strconv.Itoa(listing.Total),
-				listing.BuyerName,
-				time.Unix(int64(listing.Timestamp), 0).Format("2006-01-02 15:04:05"),
+				listing.RetainerName,
+				world,
 			})
 		}
 
@@ -80,8 +93,8 @@ var historyCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(historyCmd)
+	rootCmd.AddCommand(listingsCmd)
 
-	historyCmd.Flags().Bool("hq", false, "Only fetch high quality listings")
-	historyCmd.Flags().IntP("limit", "l", 5, "Limit the number of listings to show")
+	listingsCmd.Flags().Bool("hq", false, "Only fetch high quality listings")
+	listingsCmd.Flags().IntP("limit", "l", 5, "Limit the number of listings to show")
 }
