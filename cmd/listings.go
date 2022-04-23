@@ -20,7 +20,6 @@ import (
 // itemCmd represents the item command
 var listingsCmd = &cobra.Command{
 	Use:        "listings <server> <item>",
-	Deprecated: "Use 'history' instead",
 	Short:      "Get the current market listings for the specified item",
 	Args:       cobra.MinimumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
