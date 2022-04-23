@@ -29,14 +29,14 @@ var historyCmd = &cobra.Command{
 
 		serverName := args[0]
 		itemName := strings.Join(args[1:], " ")
-		itemData := backend.FetchItem(itemName)
+		searchData := backend.FetchSearch(itemName)
 
-		if len(itemData.Results) == 0 {
+		if len(searchData.Results) == 0 {
 			fmt.Println("No results found for " + itemName)
 			return
 		}
 
-		resultData := itemData.Results[0]
+		resultData := searchData.Results[0]
 		marketData := backend.FetchMarketItem(serverName, resultData.ID, limit, strconv.FormatBool(hq))
 
 		if len(marketData.Listings) == 0 {
@@ -47,11 +47,11 @@ var historyCmd = &cobra.Command{
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetHeader([]string{"Quality", "Price", "Quantity", "Total", "Buyer", "Sold At"})
 		table.SetFooter([]string{
-			"Information",
-			fmt.Sprintf("Item: %s", resultData.Name),
-			fmt.Sprintf("ID: %d", marketData.ItemID),
-			fmt.Sprintf("%v Shown", len(marketData.Listings)),
-			"",
+			fmt.Sprintf("%s (%d)", resultData.Name, marketData.ItemID),
+			fmt.Sprintf("Avg: %v", marketData.AveragePrice),
+			" ",
+			" ",
+			" ",
 			time.Unix(marketData.LastUploadTime/1000, 0).Format("2006-01-02 15:04:05"),
 		})
 
