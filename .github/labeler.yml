@@ -1,15 +1,15 @@
 changes | docs: 
-- '**/*.md'
-- '*.md*
+  - '**/*.md'
+  - '*.md*
 
 changes | ci:
-- '.github/workflows/**/*'
+  - '.github/workflows/**/*'
 
 changes | cmd:
-- 'cmd/**/*'
+  - 'cmd/**/*'
 
 changes | backend:
-- 'backend/**/*'
+  - 'backend/**/*'
 
 changes | structures:
-- 'structures/**/*'
+  - 'structures/**/*'
