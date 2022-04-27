@@ -30,6 +30,7 @@ install Go on your system and then run the following command, which will install
 ```
 go install github.com/BitsOfAByte/marketxiv@latest 
 ```
+
 When using Go to install the app certain build-time flags will not be set which may cause the application to say there is an update available. Running the update command after installing via Go is recommended. 
 
 ### GitHub Release
