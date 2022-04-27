@@ -60,8 +60,8 @@ jobs:
       uses: thollander/actions-comment-pull-request@v1
       with:
         message: | 
-          'Success! A preview build was generated and can be downloaded from [here](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id}}).'
-          'Please check the source code changes before downloading a build.'
+          Success! A preview build was generated and can be downloaded from [here](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id}}).
+          Please check the source code changes before downloading a build.
         comment_includes: 'preview build'
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
