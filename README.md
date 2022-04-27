@@ -47,4 +47,4 @@ git clone https://github.com/BitsOfAByte/MarketXIV && cd MarketXIV && goreleaser
 ```
 You will find the compiled binary for your OS & Arch inside of the /dist folder. Please keep in mind building manually will create a snapshot version instead of a full release, but you can still update as usual. 
 
-test
+test test
