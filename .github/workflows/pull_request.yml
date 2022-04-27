@@ -1,0 +1,72 @@
+name: PR
+
+on:
+  pull_request:
+    branches: [main]
+    
+jobs:
+  Opened:
+    if: ${{ github.event.action == 'opened'}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: 'A preview build for **${{ github.ref_name }}** is being generated, please wait. (ID: ${{ github.run_id }})'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+  Dependancy-Review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v1
+      
+  Label: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Label PR
+        uses: actions/labeler@v4
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          sync-labels: true
+
+  Preview:
+    runs-on: ubuntu-latest
+      
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+      
+    - name: Run GoReleaser
+      uses: goreleaser/goreleaser-action@v2
+      with:
+        distribution: goreleaser
+        version: latest
+        args: release --rm-dist --snapshot
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+    - name: Upload Assets
+      uses: actions/upload-artifact@v3
+      with:
+        path: |
+          dist/*.zip
+          checksums.txt
+        
+    - name: Edit Comment (Success)
+      uses: thollander/actions-comment-pull-request@v1
+      with:
+        message: 'Success! A preview build was generated and can be downloaded from [here](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id}}).\nPlease check the source code changes before downloading a build.'
+        comment_includes: 'preview build'
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Edit Comment (Failure)
+      if: ${{ failure() }}
+      uses: thollander/actions-comment-pull-request@v1
+      with:
+        message: 'Deploy failed! Something went wrong while generating a preview build for this pull request.'
+        comment_includes: 'preview build'
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
