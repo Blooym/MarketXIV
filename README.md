@@ -46,3 +46,5 @@ If you would like to build MarketXIV from source, install both Go & GoReleaser o
 git clone https://github.com/BitsOfAByte/MarketXIV && cd MarketXIV && goreleaser build --single-target --rm-dist --snapshot
 ```
 You will find the compiled binary for your OS & Arch inside of the /dist folder. Please keep in mind building manually will create a snapshot version instead of a full release, but you can still update as usual. 
+
+test
