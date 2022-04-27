@@ -1,6 +1,6 @@
 changes | docs: 
   - '**/*.md'
-  - '*.md*
+  - '*.md*'
 
 changes | ci:
   - '.github/workflows/**/*'
