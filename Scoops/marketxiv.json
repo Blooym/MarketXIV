@@ -1,0 +1,20 @@
+{
+    "version": "0.8.1",
+    "architecture": {
+        "32bit": {
+            "url": "https://github.com/BitsOfAByte/MarketXIV/releases/download/v0.8.1/marketxiv_windows_386.zip",
+            "bin": [
+                "marketxiv.exe"
+            ],
+            "hash": "cb7188231e08cfa944bf8601c623908069793fff195fdf313d88f5d646f4526a"
+        },
+        "64bit": {
+            "url": "https://github.com/BitsOfAByte/MarketXIV/releases/download/v0.8.1/marketxiv_windows_amd64.zip",
+            "bin": [
+                "marketxiv.exe"
+            ],
+            "hash": "4c6ee375f9b1bae845ad2a56cbd21672516312bbc31ed87f2ae283ea273974b1"
+        }
+    },
+    "license": "MIT"
+}
