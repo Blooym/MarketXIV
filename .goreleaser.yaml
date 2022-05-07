@@ -52,10 +52,10 @@ scoop:
   bucket:
     owner: BitsOfAByte
     name: marketxiv
-
+    
   commit_author:
-    name: goreleaserbot
-    email: goreleaser@carlosbecker.com
+    name: github-actions
+    email: actions@github.com
 
   folder: Scoops
   commit_msg_template: "chore: Scoop update for version {{ .Tag }}"
