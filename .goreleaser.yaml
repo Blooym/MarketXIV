@@ -45,19 +45,17 @@ brews:
       email: actions@github.com
 
     commit_msg_template: "chore: Brew formula update for version {{ .Tag }}"
-    folder: Formula
     license: "MIT"
 
 scoop:
   bucket:
     owner: BitsOfAByte
     name: marketxiv
-    
+
   commit_author:
     name: github-actions
     email: actions@github.com
 
-  folder: Scoops
   commit_msg_template: "chore: Scoop update for version {{ .Tag }}"
   license: MIT
 
