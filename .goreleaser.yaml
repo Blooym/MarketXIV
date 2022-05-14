@@ -16,7 +16,10 @@ builds:
       - arm
       - arm64
     ldflags:
-      - "-s -w -X 'github.com/BitsOfAByte/marketxiv/cmd.Version={{.Version}}'"
+      - "-X 'github.com/BitsOfAByte/marketxiv/build.Version={{.Version}}'"
+      - "-X 'github.com/BitsOfAByte/marketxiv/build.Commit={{.Commit}}'"
+      - "-X 'github.com/BitsOfAByte/marketxiv/build.Date={{.Date}}'"
+      - "-X 'github.com/BitsOfAByte/marketxiv/build.SUPABASE_KEY={{.Env.SUPABASE_KEY}}'"
 
 archives:
   - format: zip
