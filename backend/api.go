@@ -1,10 +1,14 @@
+/*
+Copyright © 2022 BitsOfAByte
+
+*/
+
 package backend
 
 import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"strings"
 
@@ -27,16 +31,16 @@ func formatParams(params ...interface{}) string {
 }
 
 // GET data from the URL with params params, response is given as a Byte array.
-func SendGetRequest(url string, params ...interface{}) []byte {
+func sendGetRequest(url string, params ...interface{}) []byte {
 
 	queryString := formatParams(params...)
 
-	verboseLog(fmt.Sprintf("GET %s?%s", url, queryString))
+	Debug(fmt.Sprintf("GET \"%s?%s\"", url, queryString))
 
 	resp, err := http.Get(fmt.Sprintf("%s?%s", url, queryString))
 
 	if err != nil {
-		log.Fatalln(err)
+		Fatal(err)
 	}
 
 	defer resp.Body.Close()
@@ -46,7 +50,7 @@ func SendGetRequest(url string, params ...interface{}) []byte {
 
 // Fetches the current tax rates for the specified server.
 func FetchTaxRates(server string) structures.ApiTaxRegions {
-	response := SendGetRequest("https://universalis.app/api/tax-rates", fmt.Sprintf("world=%s", server))
+	response := sendGetRequest("https://universalis.app/api/tax-rates", fmt.Sprintf("world=%s", server))
 	response = []byte(strings.Replace(string(response), "Ul'dah", "Uldah", -1))
 	var taxRateData structures.ApiTaxRegions
 	json.Unmarshal(response, &taxRateData)
@@ -55,7 +59,7 @@ func FetchTaxRates(server string) structures.ApiTaxRegions {
 
 // Searches for the given item from the API.
 func FetchSearch(query string, indexes ...string) structures.ApiSearchResult {
-	response := SendGetRequest("https://xivapi.com/search", fmt.Sprintf("string=%s", query), "limit=1", fmt.Sprintf("indexes=%s", strings.Join(indexes, ",")))
+	response := sendGetRequest("https://xivapi.com/search", fmt.Sprintf("string=%s", query), "limit=1", fmt.Sprintf("indexes=%s", strings.Join(indexes, ",")))
 	var itemData structures.ApiSearchResult
 	json.Unmarshal(response, &itemData)
 	return itemData
@@ -63,15 +67,15 @@ func FetchSearch(query string, indexes ...string) structures.ApiSearchResult {
 
 // Fetches information about the given item from the API.
 func FetchItem(itemID int) structures.ApiItem {
-	response := SendGetRequest(fmt.Sprintf("https://xivapi.com/item/%v", itemID))
+	response := sendGetRequest(fmt.Sprintf("https://xivapi.com/item/%v", itemID))
 	var itemData structures.ApiItem
 	json.Unmarshal(response, &itemData)
 	return itemData
 }
 
-// Fethces information about the given item from the market of the given server.
+// Fetches information about the given item from the market of the given server.
 func FetchMarketItem(server string, itemID int, limit int, hq string) structures.ApiMarketItem {
-	response := SendGetRequest(fmt.Sprintf("https://universalis.app/api/%s/%d", server, itemID), fmt.Sprintf("listings=%d&hq=%s", limit, hq))
+	response := sendGetRequest(fmt.Sprintf("https://universalis.app/api/%s/%d", server, itemID), fmt.Sprintf("listings=%d&hq=%s", limit, hq))
 	var marketItemData structures.ApiMarketItem
 	json.Unmarshal(response, &marketItemData)
 	return marketItemData

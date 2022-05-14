@@ -81,7 +81,6 @@ var historyCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(historyCmd)
-
 	historyCmd.Flags().Bool("hq", false, "Only fetch high quality listings")
 	historyCmd.Flags().IntP("limit", "l", 5, "Limit the number of listings to show")
 }

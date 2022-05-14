@@ -6,8 +6,6 @@ Copyright © 2022 BitsOfAByte
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/BitsOfAByte/marketxiv/backend"
 	"github.com/spf13/cobra"
 )
@@ -17,7 +15,7 @@ var updateCmd = &cobra.Command{
 	Use:   "update",
 	Short: "Update to the latest version of the app if available",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(backend.Update(rootCmd.Version))
+		backend.Update(rootCmd.Version)
 	},
 }
 

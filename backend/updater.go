@@ -1,3 +1,8 @@
+/*
+Copyright © 2022 BitsOfAByte
+
+*/
+
 package backend
 
 import (
@@ -9,24 +14,27 @@ import (
 )
 
 // returns string or error
-func Update(version string) string {
+func Update(version string) {
 
 	updater, _ := selfupdate.NewUpdater(selfupdate.Config{Validator: &selfupdate.ChecksumValidator{UniqueFilename: "checksums.txt"}})
 	latest, found, err := updater.DetectLatest("BitsOfAByte/MarketXIV")
 
 	// Unknown error occurred, abort update process.
 	if err != nil {
-		return fmt.Sprintf("error occurred while detecting version: %v", err)
+		Error(fmt.Sprintf("error occurred while detecting version: %v", err))
+		return
 	}
 
 	// Specified OS or Architechture is not supported.
 	if !found {
-		return fmt.Sprintf("latest version for %s/%s could not be found from GitHub repository", runtime.GOOS, runtime.GOARCH)
+		Warning(fmt.Sprintf("version %s is not supported on %s/%s", version, runtime.GOOS, runtime.GOARCH))
+		return
 	}
 
 	// No update is available for the current version.
 	if latest.LessOrEqual(version) {
-		return "No updates are available, you are already running the latest version."
+		fmt.Printf("no update available for version %s\n", version)
+		return
 	}
 
 	// Find the current executable's path.
@@ -34,13 +42,15 @@ func Update(version string) string {
 
 	//  Could not find the executable's path, abort update process.
 	if err != nil {
-		return "Could not locate executable path"
+		Error(fmt.Sprintf("error occurred while finding executable's path: %v", err))
+		return
 	}
 
 	// Perform the update.
 	if err := selfupdate.UpdateTo(latest.AssetURL, latest.AssetName, exe); err != nil {
-		return fmt.Sprintf("Error occurred while updating binary: %v", err)
+		Error(fmt.Sprintf("error occurred while updating: %v", err))
+		return
 	}
 
-	return fmt.Sprintf("Successfully updated to version %s (OS: %s, Arch: %s) from %s", latest.Version(), latest.OS, latest.Arch, latest.PublishedAt)
+	fmt.Printf("Successfully updated to version %s (OS: %s, Arch: %s) from %s\n", latest.Version(), latest.OS, latest.Arch, latest.PublishedAt)
 }
