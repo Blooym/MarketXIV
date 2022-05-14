@@ -40,7 +40,9 @@ brew install marketxiv
 ```
 
 ### GitHub Releases (All Platforms, Manual)
-Download the [newest release](https://github.com/BitsOfAByte/MarketXIV/releases/latest) and extract it somewhere inside of your system path, or alternatively add the executable to your path wherever you'd like it to be installed. [(Windows Path Guide)](https://www.maketecheasier.com/what-is-the-windows-path/) [(UNIX Path Guide)](https://www.computerhope.com/issues/ch001647.htm). Refer to your processors documentation for the architecture you need to download.
+Download the [newest release](https://github.com/BitsOfAByte/MarketXIV/releases/latest) and extract it somewhere inside of your system path, or alternatively add the executable to your path wherever you'd like it to be installed. [(Windows Path Guide)](https://www.maketecheasier.com/what-is-the-windows-path/) [(UNIX Path Guide)](https://www.computerhope.com/issues/ch001647.htm). 
+
+Refer to your processors documentation for the architecture you need to download.
 
 ### From Source (All Platforms)
 If you would like to build MarketXIV from source, install both GoLang & GoReleaser on to your system, then run the one-liner below:
