@@ -88,8 +88,6 @@ var listingsCmd = &cobra.Command{
 		}
 
 		table.Render()
-
-		panic("test")
 	},
 }
 
