@@ -88,12 +88,13 @@ var listingsCmd = &cobra.Command{
 		}
 
 		table.Render()
+
+		panic("test")
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(listingsCmd)
-
 	listingsCmd.Flags().Bool("hq", false, "Only fetch high quality listings")
 	listingsCmd.Flags().IntP("limit", "l", 5, "Limit the number of listings to show")
 }
