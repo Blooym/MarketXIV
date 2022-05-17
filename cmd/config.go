@@ -48,6 +48,15 @@ var analyticsCmd = &cobra.Command{
 	},
 }
 
+// dirCmd represents the dir command
+var dirCmd = &cobra.Command{
+	Use:   "dir",
+	Short: "View the directory where the configuraiton file is stored",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println(viper.ConfigFileUsed())
+	},
+}
+
 // verboseCmd represents the verbose command
 var verboseCmd = &cobra.Command{
 	Use:       "verbose <boolean>",
@@ -92,4 +101,5 @@ func init() {
 	configCmd.AddCommand(analyticsCmd)
 	configCmd.AddCommand(verboseCmd)
 	configCmd.AddCommand(uuidCmd)
+	configCmd.AddCommand(dirCmd)
 }
