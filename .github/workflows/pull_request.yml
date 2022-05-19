@@ -45,15 +45,16 @@ jobs:
         with:
           distribution: goreleaser
           version: latest
-          args: release --rm-dist --snapshot
+          args: build --rm-dist --snapshot
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SUPABASE_KEY: "unset"
 
       - name: Upload Assets
         uses: actions/upload-artifact@v3
         with:
           path: |
-            dist/*.zip
+            dist/marketxiv_*_*/*
             checksums.txt
 
       - name: Edit Comment (Success)
