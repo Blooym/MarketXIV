@@ -15,29 +15,29 @@ jobs:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           sync-labels: true
 
-  # Check to see if an invalid file has been modified, if it has then fail. 
-  No-Invalid-Edits: 
+  # Check to see if an invalid file has been modified, if it has then fail.
+  No-Invalid-Edits:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-        
+
       - name: Validate Edited Files
         uses: dorny/paths-filter@v2
         id: changes
         with:
-          list-files: 'json'
+          list-files: "json"
           filters: |
             src:
               - 'marketxiv.json'
-              - 'marketxiv.rb' 
-          
+              - 'marketxiv.rb'
+
       - name: Fail CI on Invalid Edit
         if: steps.changes.outputs.src == 'true'
-        run: | 
+        run: |
           echo "::error::Contains invalid file edits"
           exit 1
-        
+
   # Check to see if any new dependency in this pull request is vulnerable.
   Dependency-Review:
     runs-on: ubuntu-latest
@@ -48,7 +48,7 @@ jobs:
 
       - name: Dependency Review
         uses: actions/dependency-review-action@v1
-          
+
   # Post a deploy preview comment when the pull request is opened
   Opened:
     if: ${{ github.event.action == 'opened'}}
@@ -66,7 +66,7 @@ jobs:
         with:
           message: "A preview build for **${{ github.ref_name }}** is being generated, please wait. (ID: ${{ github.run_id }})"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+
   # If all is good, create a preview build for the pull request
   Preview:
     runs-on: ubuntu-latest
@@ -74,6 +74,18 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+
+      - name: Restore Build Cache
+        uses: actions/cache@v3
+          with:
+            path: |
+              ~/go/pkg/mod
+              ~/.cache/go-build
+              ~/Library/Caches/go-build
+              ~\AppData\Local\go-build
+            key: ${{ runner.os }}-go-${{ matrix.go-version }}-${{ hashFiles('**/go.sum') }}
+            restore-keys: |
+              ${{ runner.os }}-go-${{ matrix.go-version }}-
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
