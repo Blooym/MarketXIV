@@ -1,4 +1,5 @@
 <div align="center">
+  Test!
 
 <img src = ".assets/cli-example.png" alt="MarketXIV Terminal Example" height="320"/>
 
