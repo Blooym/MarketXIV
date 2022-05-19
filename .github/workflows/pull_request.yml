@@ -48,7 +48,6 @@ jobs:
           args: release --rm-dist --snapshot
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
 
       - name: Upload Assets
         uses: actions/upload-artifact@v3
