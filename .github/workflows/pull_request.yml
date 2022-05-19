@@ -5,25 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  Opened:
-    if: ${{ github.event.action == 'opened'}}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Comment
-        uses: thollander/actions-comment-pull-request@v1
-        with:
-          message: "A preview build for **${{ github.ref_name }}** is being generated, please wait. (ID: ${{ github.run_id }})"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  Dependancy-Review:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Dependency Review
-        uses: actions/dependency-review-action@v1
-
+  # Label the pull request with its file changes
   Label:
     runs-on: ubuntu-latest
     steps:
@@ -33,9 +15,54 @@ jobs:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           sync-labels: true
 
+  # Check to see if an invalid file has been modified, if it has then fail. 
+  No-Invalid-Edits: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        
+      - name: Validate Edited Files
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          list-files: 'json'
+          filters: |
+            src:
+              - 'marketxiv.json'
+              - 'marketxiv.rb' 
+          
+      - name: Fail if Invalid
+        if: steps.changes.outputs.src == 'true'
+        run: echo "::error::Contains invalid file edits"
+        
+  # Check to see if any new dependency in this pull request is vulnerable.
+  Dependency-Review:
+    runs-on: ubuntu-latest
+    needs: ["No-Invalid-Edits"]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v1
+          
+  # Post a deploy preview comment when the pull request is opened
+  Opened:
+    if: ${{ github.event.action == 'opened'}}
+    needs: ["No-Invalid-Edits", "Dependency-Review"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: "A preview build for **${{ github.ref_name }}** is being generated, please wait. (ID: ${{ github.run_id }})"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # If all is good, create a preview build for the pull request
   Preview:
     runs-on: ubuntu-latest
-
+    needs: ["Dependency-Review", "No-Invalid-Edits"]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
