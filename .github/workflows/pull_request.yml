@@ -34,7 +34,9 @@ jobs:
           
       - name: Fail if Invalid
         if: steps.changes.outputs.src == 'true'
-        run: echo "::error::Contains invalid file edits"
+        run: | 
+          echo "::error::Contains invalid file edits"
+          exit 1
         
   # Check to see if any new dependency in this pull request is vulnerable.
   Dependency-Review:
