@@ -6,7 +6,7 @@
             "bin": [
                 "marketxiv.exe"
             ],
-            "hash": "8533e8358a14a3a63352f633a57c191bf50b4bf6b6f560e466e4bda3105f720b"
+            "hash": "test"
         },
         "64bit": {
             "url": "https://github.com/BitsOfAByte/MarketXIV/releases/download/v0.10.0/marketxiv_windows_amd64.zip",
