@@ -20,7 +20,7 @@ var rootCmd = &cobra.Command{
 	Use:   "marketxiv",
 	Short: "MarketXIV is a command line tool for interacting with the FFXIV Online market via Universalis.",
 	Long: `MarketXIV is a command line tool for interacting with the FFXIV Online market via Universalis. 
-You can view the current market tax rates, or search for an item and view its listings.`,
+You can view the current market tax rates, or search for an item and view its listings, 123 123 123 TEST`,
 	Version: build.Version,
 }
 
