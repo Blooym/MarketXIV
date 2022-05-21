@@ -74,3 +74,4 @@ release:
     owner: BitsOfAByte
     name: MarketXIV
   prerelease: auto
+  use: github-native
