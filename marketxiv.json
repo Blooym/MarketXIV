@@ -1,20 +1,22 @@
 {
-    "version": "0.10.0",
+    "version": "0.10.1",
     "architecture": {
         "32bit": {
-            "url": "https://github.com/BitsOfAByte/MarketXIV/releases/download/v0.10.0/marketxiv_windows_386.zip",
+            "url": "https://github.com/BitsOfAByte/MarketXIV/releases/download/v0.10.1/marketxiv_windows_386.zip",
             "bin": [
                 "marketxiv.exe"
             ],
-            "hash": "8533e8358a14a3a63352f633a57c191bf50b4bf6b6f560e466e4bda3105f720b"
+            "hash": "95c1d2cd8e116fa4e73d894db42dfbdc613810273eb2b9f6215a19b7f013991b"
         },
         "64bit": {
-            "url": "https://github.com/BitsOfAByte/MarketXIV/releases/download/v0.10.0/marketxiv_windows_amd64.zip",
+            "url": "https://github.com/BitsOfAByte/MarketXIV/releases/download/v0.10.1/marketxiv_windows_amd64.zip",
             "bin": [
                 "marketxiv.exe"
             ],
-            "hash": "f6ebf282dc2a54176ae8b26282431fb52890e1ceec4fe7bf4a22d35592f8f2c2"
+            "hash": "88eb7cbd65b49104953517b908e76f298ccde8dba5923a535dd75969b7864c42"
         }
     },
-    "license": "MIT"
+    "homepage": "https://github.com/BitsOfAByte/MarketXIV",
+    "license": "MIT",
+    "description": " Final Fantasy 14 market information straight to your command line"
 }
