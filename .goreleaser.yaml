@@ -52,7 +52,7 @@ brews:
       email: actions@github.com
 
     commit_msg_template: "chore: Brew formula update for version {{ .Tag }}"
-    description: " Final Fantasy 14 market information straight to your command line"
+    description: "Final Fantasy 14 market information straight to your command line"
     homepage: "https://github.com/BitsOfAByte/MarketXIV"
     license: "MIT"
 
@@ -66,7 +66,7 @@ scoop:
     email: actions@github.com
 
   commit_msg_template: "chore: Scoop update for version {{ .Tag }}"
-  description: " Final Fantasy 14 market information straight to your command line"
+  description: "Final Fantasy 14 market information straight to your command line"
   homepage: "https://github.com/BitsOfAByte/MarketXIV"
   license: MIT
   
@@ -74,7 +74,7 @@ nfpms:
   - vendor: BitsOfAByte
     homepage: https://github.com/BitsOfAByte/marketxiv
     maintainer: BitsOfAByte
-    description: Final Fantasy 14 market information straight to your command line. calling 
+    description: "Final Fantasy 14 market information straight to your command line"
     license: MIT
 
     formats:
