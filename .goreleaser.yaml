@@ -16,11 +16,11 @@ builds:
       - arm
       - arm64
     ldflags:
-      - "-s -w"
-      - "-X 'github.com/BitsOfAByte/marketxiv/build.Version={{.Version}}'"
-      - "-X 'github.com/BitsOfAByte/marketxiv/build.Commit={{.Commit}}'"
-      - "-X 'github.com/BitsOfAByte/marketxiv/build.Date={{.Date}}'"
-      - "-X 'github.com/BitsOfAByte/marketxiv/build.SUPABASE_KEY={{.Env.SUPABASE_KEY}}'"
+      - -s -w
+      - -X 'github.com/BitsOfAByte/marketxiv/build.Version={{.Version}}'
+      - -X 'github.com/BitsOfAByte/marketxiv/build.Commit={{.Commit}}'
+      - -X 'github.com/BitsOfAByte/marketxiv/build.Date={{.Date}}'
+      - -X 'github.com/BitsOfAByte/marketxiv/build.SUPABASE_KEY={{ if index .Env "SUPABASE_KEY"  }}{{ .Env.SUPABASE_KEY }}{{ else }}none{{ end }}'
 
 archives:
   - format: zip
@@ -52,9 +52,41 @@ brews:
       email: actions@github.com
 
     commit_msg_template: "chore: Brew formula update for version {{ .Tag }}"
-    description: "Final Fantasy 14 market information straight to your command line"
+    description: |
+      FFXIV Market CLI Tool
     homepage: "https://github.com/BitsOfAByte/MarketXIV"
     license: "MIT"
+
+nfpms:
+  - vendor: BitsOfAByte
+    id: nfpm
+    homepage: https://github.com/BitsOfAByte/MarketXIV
+    maintainer: BitsOfAByte
+    description: |
+      FFXIV Market CLI Tool
+    license: "MIT"
+    formats:
+      - deb
+      - rpm
+
+    file_name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+
+    contents:
+      - dst: ~/.config/marketxiv
+        type: dir
+        file_info:
+          mode: 0755
+
+      - dst: ~/.config/marketxiv/config.json
+        type: ghost
+
+publishers:
+  - name: "packages.bitsofabyte.dev"
+    dir: "{{ dir .ArtifactPath }}"
+    ids:
+      - nfpm
+    cmd: |
+      curl -F package=@{{ .ArtifactName }} https://{{ .Env.FURY_TOKEN }}@push.fury.io/BitsOfAByte/
 
 scoop:
   bucket:
