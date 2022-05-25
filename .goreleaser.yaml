@@ -101,23 +101,6 @@ scoop:
   description: "Final Fantasy 14 market information straight to your command line"
   homepage: "https://github.com/BitsOfAByte/MarketXIV"
   license: MIT
-  
-nfpms:
-  - vendor: BitsOfAByte
-    homepage: https://github.com/BitsOfAByte/marketxiv
-    maintainer: BitsOfAByte
-    description: "Final Fantasy 14 market information straight to your command line"
-    license: MIT
-
-    formats:
-      - deb
-      - rpm
-
-    file_name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
-
-    contents:
-      - dst: ~/.config/marketxiv/config.json
-        type: ghost
 
 release:
   github:
