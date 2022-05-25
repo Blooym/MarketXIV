@@ -18,7 +18,7 @@ var updateCmd = &cobra.Command{
 	Use:   "update",
 	Short: "Update to the latest version of the app if available",
 	Run: func(cmd *cobra.Command, args []string) {
-		forceFlag := cmd.Flag("force").Value.String()
+		forceFlag := cmd.Flags().Lookup("force").Value.String()
 		if forceFlag == "true" {
 			backend.Update(rootCmd.Version)
 		} else {
@@ -32,4 +32,6 @@ var updateCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(updateCmd)
+
+	updateCmd.Flags().BoolP("force", "f", false, "Force updater to run")
 }
