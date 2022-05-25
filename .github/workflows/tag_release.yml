@@ -48,3 +48,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          FURY_TOKEN: ${{ secrets.FURY_TOKEN }}
