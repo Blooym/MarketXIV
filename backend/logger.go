@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strings"
 
 	"github.com/spf13/viper"
 )
@@ -37,13 +36,11 @@ func Warning(message interface{}) {
 
 // Logs an error and continues the program.
 func Error(message interface{}) {
-	SendLog("error", strings.TrimSpace(fmt.Sprintf("%v", message)))
 	fmt.Printf("Error: %v\n", message)
 }
 
 // Logs a fatal error and exits the program.
 func Fatal(message interface{}) {
-	SendLog("fatal", strings.TrimSpace(fmt.Sprintf("%v", message)))
 	fmt.Printf("Fatal: %v\n", message)
 	os.Exit(1)
 }

@@ -18,36 +18,6 @@ var configCmd = &cobra.Command{
 	Short: "View and edit the configuration for MarketXIV",
 }
 
-// analyticsCmd represents the analytics command
-var analyticsCmd = &cobra.Command{
-	Use:       "analytics <boolean>",
-	Short:     "Enable or disable analytics collection",
-	Args:      cobra.ExactValidArgs(1),
-	ValidArgs: []string{"true", "false"},
-	Run: func(cmd *cobra.Command, args []string) {
-		switch args[0] {
-		case "true":
-			viper.Set("analytics.enabled", true)
-			err := viper.WriteConfig()
-
-			if err != nil {
-				fmt.Println("Error writing config file: ", err)
-			}
-
-			fmt.Println("Analytics collection enabled")
-		case "false":
-			viper.Set("analytics.enabled", false)
-			err := viper.WriteConfig()
-
-			if err != nil {
-				fmt.Println("Error writing config file: ", err)
-			}
-
-			fmt.Println("Analytics collection disabled")
-		}
-	},
-}
-
 // dirCmd represents the dir command
 var dirCmd = &cobra.Command{
 	Use:   "dir",
@@ -87,19 +57,8 @@ var verboseCmd = &cobra.Command{
 	},
 }
 
-// uuidCmd represents the uuid command
-var uuidCmd = &cobra.Command{
-	Use:   "uuid",
-	Short: "View your unique analytics ID",
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(viper.GetString("analytics.uuid"))
-	},
-}
-
 func init() {
 	rootCmd.AddCommand(configCmd)
-	configCmd.AddCommand(analyticsCmd)
 	configCmd.AddCommand(verboseCmd)
-	configCmd.AddCommand(uuidCmd)
 	configCmd.AddCommand(dirCmd)
 }

@@ -20,7 +20,6 @@ builds:
       - -X 'github.com/BitsOfAByte/marketxiv/build.Version={{.Version}}'
       - -X 'github.com/BitsOfAByte/marketxiv/build.Commit={{.Commit}}'
       - -X 'github.com/BitsOfAByte/marketxiv/build.Date={{.Date}}'
-      - -X 'github.com/BitsOfAByte/marketxiv/build.SUPABASE_KEY={{ if index .Env "SUPABASE_KEY"  }}{{ .Env.SUPABASE_KEY }}{{ else }}none{{ end }}'
 
 archives:
   - format: zip

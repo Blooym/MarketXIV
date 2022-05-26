@@ -156,25 +156,3 @@ Building MarketXIV from source is not recommended for beginners, but if you know
 You will find the compiled binary for your OS & Arch inside of the `/dist` folder.
 
 </details>  
-
-
-## Analytics / Logs
-MarketXIV collects some analytics to help identify issues and create patches for them. Any information submitted is done so in a way that provides as much privacy as possible, you can view all of the analytics code [here](./backend/analytics.go).
-
-#### Information Collected
-
-| Data              | Used For                                                      |
-|-------------------|---------------------------------------------------------------|
-| UUID              | Finding specific data for deletion requests                   |
-| Command           | The command that triggered the log to be sent                 |
-| Log Type          | Filtering out un-necessary logs when searching                |
-| Log Message       | Knowing what happened and possible fixes                      |
-| Architecture + OS | Diagnosing OS or Architecture specific bugs                   |
-| MarketXIV Version | Diagnosing bugs in specific versions of the program           |
-| Created At        | Knowing when issues occured for correlating with API downtime |
-
-### Opting Out
-`marketxiv config analytics false` will opt you out from all analytics.
-
-#### Deletion
-If you would like any previous logs deleted from the database, open an issue with your UUID (found using `marketxiv config uuid`).

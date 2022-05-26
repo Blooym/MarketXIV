@@ -10,7 +10,6 @@ import (
 
 	"github.com/BitsOfAByte/marketxiv/backend"
 	"github.com/BitsOfAByte/marketxiv/build"
-	"github.com/google/uuid"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -43,8 +42,6 @@ func initConfig() {
 	viper.SetConfigType("json")
 
 	// Set the default values for the configuration
-	viper.SetDefault("analytics.enabled", true)
-	viper.SetDefault("analytics.uuid", uuid.New().String())
 	viper.SetDefault("app.verbose", false)
 
 	// Attempt to read the configuration file
