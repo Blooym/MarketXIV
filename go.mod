@@ -8,10 +8,7 @@ require (
 	github.com/spf13/cobra v1.4.0
 )
 
-require (
-	github.com/google/uuid v1.1.2
-	github.com/spf13/viper v1.11.0
-)
+require github.com/spf13/viper v1.11.0
 
 require (
 	code.gitea.io/sdk/gitea v0.13.2 // indirect
