@@ -47,9 +47,9 @@ var listingsCmd = &cobra.Command{
 
 		itemData := backend.FetchItem(resultData.ID)
 
-		if itemData.PriceMid <= marketData.Listings[0].PricePerUnit && itemData.PriceMid != 0 {
-			fmt.Println("Note: This item may be cheaper to buy at a vendor instead of the market. Vendor Price: ", itemData.PriceMid)
-		}
+// 		if itemData.PriceMid <= marketData.Listings[0].PricePerUnit && itemData.PriceMid != 0 {
+// 			fmt.Println("Note: This item may be cheaper to buy at a vendor instead of the market. Vendor Price: ", itemData.PriceMid)
+// 		}
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetHeader([]string{"Quality", "Price", "Quantity", "Total", "Retainer", "World"})
