@@ -10,7 +10,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/BitsOfAByte/marketxiv/backend"
 	"github.com/olekukonko/tablewriter"
@@ -45,36 +44,23 @@ var listingsCmd = &cobra.Command{
 			return
 		}
 
-		itemData := backend.FetchItem(resultData.ID)
-
-// 		if itemData.PriceMid <= marketData.Listings[0].PricePerUnit && itemData.PriceMid != 0 {
-// 			fmt.Println("Note: This item may be cheaper to buy at a vendor instead of the market. Vendor Price: ", itemData.PriceMid)
-// 		}
-
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetHeader([]string{"Quality", "Price", "Quantity", "Total", "Retainer", "World"})
-		table.SetFooter([]string{
-			fmt.Sprintf("%s (%d)", resultData.Name, marketData.ItemID),
-			fmt.Sprintf("Avg: %v", marketData.AveragePrice),
-			" ",
-			" ",
-			" ",
-			time.Unix(marketData.LastUploadTime/1000, 0).Format("2006-01-02 15:04:05"),
-		})
 
 		// Format and display the data
 		for _, listing := range marketData.Listings {
 			world := listing.WorldName
-			quality := strconv.FormatBool(listing.Hq)
 
 			if world == "" {
 				world = serverName
 			}
 
-			if quality == "false" {
+			quality := "Normal"
+			switch listing.Hq {
+			case true:
+				quality = "HQ"
+			case false:
 				quality = "Normal"
-			} else {
-				quality = "High"
 			}
 
 			table.Append([]string{

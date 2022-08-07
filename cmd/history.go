@@ -46,23 +46,15 @@ var historyCmd = &cobra.Command{
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetHeader([]string{"Quality", "Price", "Quantity", "Total", "Buyer", "Sold At"})
-		table.SetFooter([]string{
-			fmt.Sprintf("%s (%d)", resultData.Name, marketData.ItemID),
-			fmt.Sprintf("Avg: %v", marketData.AveragePrice),
-			" ",
-			" ",
-			" ",
-			time.Unix(marketData.LastUploadTime/1000, 0).Format("2006-01-02 15:04:05"),
-		})
 
 		// Format and display the data
 		for _, listing := range marketData.RecentHistory {
-			quality := strconv.FormatBool(listing.Hq)
-
-			if quality == "false" {
+			quality := "Normal"
+			switch listing.Hq {
+			case true:
+				quality = "HQ"
+			case false:
 				quality = "Normal"
-			} else {
-				quality = "High"
 			}
 
 			table.Append([]string{
@@ -71,7 +63,7 @@ var historyCmd = &cobra.Command{
 				strconv.Itoa(listing.Quantity),
 				strconv.Itoa(listing.Total),
 				listing.BuyerName,
-				time.Unix(int64(listing.Timestamp), 0).Format("2006-01-02 15:04:05"),
+				time.Unix(int64(listing.Timestamp), 0).Format("02-01-06 15:04"),
 			})
 		}
 
