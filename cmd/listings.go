@@ -26,6 +26,11 @@ var listingsCmd = &cobra.Command{
 		hq, _ := cmd.Flags().GetBool("hq")
 		limit, _ := cmd.Flags().GetInt("limit")
 
+		if limit > 100 {
+			fmt.Println("Limit must be less than 100")
+			os.Exit(1)
+		}
+
 		serverName := args[0]
 		itemName := strings.Join(args[1:], " ")
 		searchData := backend.FetchSearch(itemName, "item")
