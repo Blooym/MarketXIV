@@ -1,5 +1,6 @@
 # Builds
 dist/
+marketxiv
 
 # Secrets
 *.pem
