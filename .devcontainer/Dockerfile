@@ -9,4 +9,3 @@ USER dev
 
 # Install useful go packages.
 RUN go install github.com/goreleaser/goreleaser@latest 
-RUN go install gotests gomodifytags impl goplay dlv staticcheck gopls
