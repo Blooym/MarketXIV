@@ -27,6 +27,20 @@ var dirCmd = &cobra.Command{
 	},
 }
 
+// showCmd represents the show command
+var showCmd = &cobra.Command{
+	Use:   "show",
+	Short: "View the configuration",
+	Run: func(cmd *cobra.Command, args []string) {
+		settingsMap := viper.AllSettings()
+		for _, value := range settingsMap {
+			for key2, value2 := range value.(map[string]interface{}) {
+				fmt.Println(key2, "=", value2)
+			}
+		}
+	},
+}
+
 // verboseCmd represents the verbose command
 var verboseCmd = &cobra.Command{
 	Use:       "verbose <boolean>",
@@ -61,4 +75,5 @@ func init() {
 	rootCmd.AddCommand(configCmd)
 	configCmd.AddCommand(verboseCmd)
 	configCmd.AddCommand(dirCmd)
+	configCmd.AddCommand(showCmd)
 }
