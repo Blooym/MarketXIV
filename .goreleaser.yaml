@@ -77,6 +77,8 @@ nfpms:
     description: |
       FFXIV marketboard for your command line
     license: MIT
+    provides:
+      - marketxiv
     formats:
       - deb
       - rpm

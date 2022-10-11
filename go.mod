@@ -3,12 +3,14 @@ module github.com/BitsOfAByte/marketxiv
 go 1.17
 
 require (
-	github.com/creativeprojects/go-selfupdate v0.6.1
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/spf13/cobra v1.4.0
 )
 
-require github.com/spf13/viper v1.11.0
+require (
+	github.com/creativeprojects/go-selfupdate v0.6.1
+	github.com/spf13/viper v1.11.0
+)
 
 require (
 	code.gitea.io/sdk/gitea v0.13.2 // indirect
@@ -16,7 +18,7 @@ require (
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-github/v30 v30.1.0 // indirect
-	github.com/google/go-querystring v1.1.0 // indirect
+	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/hashicorp/go-version v1.2.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
