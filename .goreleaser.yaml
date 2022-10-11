@@ -10,6 +10,8 @@ builds:
       - linux
       - windows
       - darwin
+      - freebsd
+      - netbsd
     goarch:
       - 386
       - amd64
@@ -45,16 +47,27 @@ brews:
   - tap:
       owner: BitsOfAByte
       name: marketxiv
-
     commit_author:
       name: github-actions
       email: actions@github.com
-
     commit_msg_template: "chore: Brew formula update for version {{ .Tag }}"
     description: |
-      FFXIV Market CLI Tool
+      FFXIV marketboard for your command line
     homepage: "https://github.com/BitsOfAByte/MarketXIV"
     license: "MIT"
+
+scoop:
+  bucket:
+    owner: BitsOfAByte
+    name: marketxiv
+  commit_author:
+    name: github-actions
+    email: actions@github.com
+  commit_msg_template: "chore: Scoop update for version {{ .Tag }}"
+  description: |
+    FFXIV marketboard for your command line
+  homepage: "https://github.com/BitsOfAByte/MarketXIV"
+  license: MIT
 
 nfpms:
   - vendor: BitsOfAByte
@@ -62,22 +75,16 @@ nfpms:
     homepage: https://github.com/BitsOfAByte/MarketXIV
     maintainer: BitsOfAByte
     description: |
-      FFXIV Market CLI Tool
-    license: "MIT"
+      FFXIV marketboard for your command line
+    license: MIT
     formats:
       - deb
       - rpm
-
     file_name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
-
-    contents:
-      - dst: ~/.config/marketxiv
-        type: dir
-        file_info:
-          mode: 0755
-
-      - dst: ~/.config/marketxiv/config.json
-        type: ghost
+    scripts:
+      postremove: scripts/post-remove.sh
+    rpm:
+      compression: xz
 
 publishers:
   - name: "packages.bitsofabyte.dev"
@@ -86,20 +93,6 @@ publishers:
       - nfpm
     cmd: |
       curl -F package=@{{ .ArtifactName }} https://{{ .Env.FURY_TOKEN }}@push.fury.io/BitsOfAByte/
-
-scoop:
-  bucket:
-    owner: BitsOfAByte
-    name: marketxiv
-
-  commit_author:
-    name: github-actions
-    email: actions@github.com
-
-  commit_msg_template: "chore: Scoop update for version {{ .Tag }}"
-  description: "Final Fantasy 14 market information straight to your command line"
-  homepage: "https://github.com/BitsOfAByte/MarketXIV"
-  license: MIT
 
 release:
   github:
