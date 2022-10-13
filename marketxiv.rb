@@ -6,21 +6,21 @@ class Marketxiv < Formula
   desc "FFXIV marketboard for your command line
 "
   homepage "https://github.com/BitsOfAByte/MarketXIV"
-  version "1.0.2"
+  version "1.0.3"
   license "MIT"
 
   on_macos do
-    if Hardware::CPU.intel?
-      url "https://github.com/BitsOfAByte/MarketXIV/releases/download/v1.0.2/marketxiv_darwin_amd64.zip"
-      sha256 "6bd854161841890b0cdb880e746afde71ac4abf9b7331f98ae24bd44d03e6fd0"
+    if Hardware::CPU.arm?
+      url "https://github.com/BitsOfAByte/MarketXIV/releases/download/v1.0.3/marketxiv_1.0.3_darwin_arm64.zip"
+      sha256 "f50829067ff73c471cf7eaa8126fb3aacceb16d426d50614cf40c1cff88c3c1c"
 
       def install
         bin.install "marketxiv"
       end
     end
-    if Hardware::CPU.arm?
-      url "https://github.com/BitsOfAByte/MarketXIV/releases/download/v1.0.2/marketxiv_darwin_arm64.zip"
-      sha256 "7e3eb6d87c38c2536da68ebaf21583c2b76aa47ae055008c52fd5d290b47ad5a"
+    if Hardware::CPU.intel?
+      url "https://github.com/BitsOfAByte/MarketXIV/releases/download/v1.0.3/marketxiv_1.0.3_darwin_amd64.zip"
+      sha256 "62728591b4e27472ea5aa62de115b1f1489c5f4d672bdff79f6009a8030f73b9"
 
       def install
         bin.install "marketxiv"
@@ -29,25 +29,25 @@ class Marketxiv < Formula
   end
 
   on_linux do
-    if Hardware::CPU.intel?
-      url "https://github.com/BitsOfAByte/MarketXIV/releases/download/v1.0.2/marketxiv_linux_amd64.zip"
-      sha256 "35921e894d4dbdf91f086225cee79646dcb203694ddb58b6daae95732accedb7"
-
-      def install
-        bin.install "marketxiv"
-      end
-    end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/BitsOfAByte/MarketXIV/releases/download/v1.0.2/marketxiv_linux_arm64.zip"
-      sha256 "72ba182ad2f9a4c417f18709ebce455d2876db6212d0d1c68049dd3ae2aba65d"
+      url "https://github.com/BitsOfAByte/MarketXIV/releases/download/v1.0.3/marketxiv_1.0.3_linux_arm64.zip"
+      sha256 "b9b30be18ddb38b5dc3e7f45bba12af137b802726a00c289e493c682704f98d7"
 
       def install
         bin.install "marketxiv"
       end
     end
     if Hardware::CPU.arm? && !Hardware::CPU.is_64_bit?
-      url "https://github.com/BitsOfAByte/MarketXIV/releases/download/v1.0.2/marketxiv_linux_arm.zip"
-      sha256 "7dcbac2fbddaa688972adf65642dfa1940c41d5202bf4726f10c87603ad703bb"
+      url "https://github.com/BitsOfAByte/MarketXIV/releases/download/v1.0.3/marketxiv_1.0.3_linux_armv6.zip"
+      sha256 "70e079d42e8a217b060cef30307cb76f7aec48cb1e2c919341d06df139b6835d"
+
+      def install
+        bin.install "marketxiv"
+      end
+    end
+    if Hardware::CPU.intel?
+      url "https://github.com/BitsOfAByte/MarketXIV/releases/download/v1.0.3/marketxiv_1.0.3_linux_amd64.zip"
+      sha256 "fbf66344cb242ec429d787d18b3fc58acb6578ba3abf52964d1745da6004c438"
 
       def install
         bin.install "marketxiv"
