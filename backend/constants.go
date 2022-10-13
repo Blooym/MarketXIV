@@ -1,4 +1,4 @@
-package build
+package backend
 
 var (
 	// Information about the build itself, used for debugging.

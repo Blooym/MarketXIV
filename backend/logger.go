@@ -41,6 +41,6 @@ func Error(message interface{}) {
 
 // Logs a fatal error and exits the program.
 func Fatal(message interface{}) {
-	fmt.Printf("Fatal: %v\n", message)
+	fmt.Printf("FATAL: %v\n", message)
 	os.Exit(1)
 }

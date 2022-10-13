@@ -9,7 +9,6 @@ import (
 	"os"
 
 	"github.com/BitsOfAByte/marketxiv/backend"
-	"github.com/BitsOfAByte/marketxiv/build"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -20,7 +19,7 @@ var rootCmd = &cobra.Command{
 	Short: "MarketXIV is a command line tool for interacting with the FFXIV Online market via Universalis.",
 	Long: `MarketXIV is a command line tool for interacting with the FFXIV Online market via Universalis. 
 You can view the current market tax rates, or search for an item and view its listings.`,
-	Version: build.Version,
+	Version: backend.Version,
 }
 
 func Execute() {
