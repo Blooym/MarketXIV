@@ -23,14 +23,12 @@ builds:
       - -X 'github.com/BitsOfAByte/marketxiv/build.Version={{.Version}}'
       - -X 'github.com/BitsOfAByte/marketxiv/build.Commit={{.Commit}}'
       - -X 'github.com/BitsOfAByte/marketxiv/build.Date={{.Date}}'
-
 archives:
   - format: zip
 checksum:
   name_template: "checksums.txt"
 snapshot:
   name_template: "{{ incpatch .Version }}-next"
-
 changelog:
   sort: asc
   use: github-native

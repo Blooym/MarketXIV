@@ -5,7 +5,7 @@ name: "PR: Code Changes"
 on:
   pull_request:
     branches: [main]
-    types: ["ready_for_review"]
+    types: [ready_for_review, opened, synchronize, reopened]
     paths:
       - "**.go"
       - "go.mod"
@@ -27,15 +27,15 @@ jobs:
           list-files: "json"
           filters: |
             src:
-              - 'marketxiv.json'
               - 'marketxiv.rb'
+              - 'marketxiv.json'
 
       - name: Post Comment on Invalid Changes
         if: steps.changes.outputs.src == 'true'
         uses: thollander/actions-comment-pull-request@v1
         with:
-          message: "A preview build was not generated as a security measure as invalid files have been modified, please refer to the contributing guide for information."
-          comment_includes: "preview build"
+          message: "A preview-build was not generated as a security measure as invalid files have been modified, please refer to the contributing guide for information."
+          comment_includes: "preview-build"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Fail CI on Invalid Edit
@@ -59,8 +59,8 @@ jobs:
         if: ${{ failure() }}
         uses: thollander/actions-comment-pull-request@v1
         with:
-          message: "A preview build was not generated as a security measure due to this pull request containing insecure dependencies."
-          comment_includes: "preview build"
+          message: "A preview-build was not generated as a security measure due to this pull request containing insecure dependencies."
+          comment_includes: "preview-build"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # If all is good, create a preview build for the pull request if needed.
@@ -69,61 +69,99 @@ jobs:
     needs: ["Dependency-Review", "No-Invalid-Edits"]
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Post/Edit Initial Build Comment
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: |
+            ### Building ${{ github.repository}} <span aria-hidden="true">🚧</span>
+            Please wait, this could take several minutes to complete. This comment will be edited when finished.
+
+            |  Name | Detail |
+            |---------------------------------|-------------------------------------------------------------------------------------|
+            | **Commit** 						          | ${{ github.sha }}                                                                   |
+            | **Logs** 							          | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
+            | **Build Environment** 			    | ${{ runner.os }}/${{ runner.arch }}                                                 |
+            | **Triggered By**							  | [${{ github.actor }}](https://github.com/${{ github.actor }})                       |
+
+            identifier: preview-build
+          comment_includes: "preview-build"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v3
         with:
-          go-version: 1.18.2
+          go-version: 1.19
 
-      - name: Restore Build Cache
+      - id: go-cache-paths
+        run: |
+          echo "::set-output name=go-build::$(go env GOCACHE)"
+          echo "::set-output name=go-mod::$(go env GOMODCACHE)"
+
+      - name: Go Build Cache
         uses: actions/cache@v3
         with:
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-            ~/Library/Caches/go-build
-            ~\AppData\Local\go-build
-          key: ${{ runner.os }}-go-${{ matrix.go-version }}-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-${{ matrix.go-version }}-
+          path: ${{ steps.go-cache-paths.outputs.go-build }}
+          key: ${{ runner.os }}-go-build-${{ hashFiles('**/go.sum') }}
+
+      - name: Go Mod Cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.go-cache-paths.outputs.go-mod }}
+          key: ${{ runner.os }}-go-mod-${{ hashFiles('**/go.sum') }}
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v2
+        uses: goreleaser/goreleaser-action@v3
         with:
           distribution: goreleaser
           version: latest
           args: build --rm-dist --snapshot
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SUPABASE_KEY: "unset"
 
       - name: Upload Assets
         uses: actions/upload-artifact@v3
         with:
           path: |
-            dist/marketxiv_*_*/*
+            dist/marketxiv*_*/*
             checksums.txt
 
-      - name: Edit Comment (Success)
+      - name: Post/Edit Build Comment (Success)
         uses: thollander/actions-comment-pull-request@v1
         with:
           message: |
-            ### ✅ Success
+            ### Build Complete for ${{ github.repository }} <span aria-hidden="true">⚡</span>
+            All builds finished without issues and any artifact(s) have been uploaded.
 
-            **Always review the source code before executing it on your system, no matter where it comes from** 
+            |  Name | Detail |
+            |---------------------------------|-------------------------------------------------------------------------------------|
+            | **Commit** 						          | ${{ github.sha }}                                                                   |
+            | **Logs** 							          | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
+            | **Build Environment** 			    | ${{ runner.os }}/${{ runner.arch }}                                                 |
+            | **Triggered By**							  | [${{ github.actor }}](https://github.com/${{ github.actor }})                       |
 
-            | Name                 |  Link                                                                          |
-            |----------------------|--------------------------------------------------------------------------------|
-            | Preview Build Commit | ${{ github.sha }}                                                              |
-            | Preview Build URL    |  https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} |
-          comment_includes: "preview build"
+            *Please review the code before downloading any artifacts for security reasons.* 
+
+            identifier: preview-build
+          comment_includes: "preview-build"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Edit Comment (Failure)
+      - name: Post/Edit Build Comment (Failure)
         if: ${{ failure() }}
         uses: thollander/actions-comment-pull-request@v1
         with:
-          message: "Deploy failed! Something went wrong while generating a preview build for this pull request."
-          comment_includes: "preview build"
+          message: |
+            ### Build Failed for ${{ github.repository }} <span aria-hidden="true">⚠️</span>
+            Something went wrong when running a build, please view the logs for more information about this.
+
+            |  Name | Detail |
+            |---------------------------------|-------------------------------------------------------------------------------------|
+            | **Commit** 						          | ${{ github.sha }}                                                                   |
+            | **Logs** 							          | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
+            | **Build Environment** 			    | ${{ runner.os }}/${{ runner.arch }}                                                 |
+            | **Triggered By**							  | [${{ github.actor }}](https://github.com/${{ github.actor }})                       |
+
+            identifier: preview-build
+          comment_includes: "preview-build"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

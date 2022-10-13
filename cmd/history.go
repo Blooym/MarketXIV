@@ -1,8 +1,8 @@
 /*
 Copyright © 2022 BitsOfAByte
 
+MIT License, see the LICENSE file for more information.
 */
-
 package cmd
 
 import (
