@@ -20,9 +20,9 @@ builds:
       - arm64
     ldflags:
       - -s -w
-      - -X 'github.com/BitsOfAByte/marketxiv/build.Version={{.Version}}'
-      - -X 'github.com/BitsOfAByte/marketxiv/build.Commit={{.Commit}}'
-      - -X 'github.com/BitsOfAByte/marketxiv/build.Date={{.Date}}'
+      - -X 'github.com/BitsOfAByte/marketxiv/backend.Version={{.Version}}'
+      - -X 'github.com/BitsOfAByte/marketxiv/backend.Commit={{.Commit}}'
+      - -X 'github.com/BitsOfAByte/marketxiv/backend.Date={{.Date}}'
 archives:
   - format: zip
 checksum:
