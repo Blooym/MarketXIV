@@ -20,7 +20,7 @@ var updateCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		forceFlag := cmd.Flags().Lookup("force").Value.String()
 		if forceFlag == "true" {
-			backend.Update(rootCmd.Version)
+			backend.Update(RootCmd.Version)
 		} else {
 			fmt.Println("WARNING! You should not use the app-update command unless you have a manual installation.")
 			fmt.Println("If you are trying to update the app and have installed it with a package manager, use that instead.")
@@ -31,7 +31,7 @@ var updateCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(updateCmd)
+	RootCmd.AddCommand(updateCmd)
 
 	updateCmd.Flags().BoolP("force", "f", false, "Force updater to run")
 }

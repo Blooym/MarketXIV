@@ -51,5 +51,5 @@ var taxCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(taxCmd)
+	RootCmd.AddCommand(taxCmd)
 }

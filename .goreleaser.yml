@@ -86,6 +86,7 @@ nfpms:
     provides:
       - marketxiv
     contents:
+      # Doc files.
       - dst: /usr/share/doc/marketxiv
         type: dir
       - src: ./LICENSE
@@ -93,16 +94,21 @@ nfpms:
       - src: ./README.md
         dst: /usr/share/doc/marketxiv/README
 
+      # Man pages.
+      - src: ./.build_data/man/
+        dst: /usr/share/man/man1/
+
+      # Yum/DNF repository.
       - src: ./.build_data/bitsofabyte.repo
         dst: /etc/yum.repos.d/bitsofabyte.repo
         type: config|noreplace
         packager: rpm
+
+      # APT repository.
       - src: ./.build_data/bitsofabyte.list
         dst: /etc/apt/sources.list.d/bitsofabyte.list
         type: config|noreplace
         packager: deb
-    scripts:
-      postremove: build/scripts/post-remove.sh
     rpm:
       compression: xz
 

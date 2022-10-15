@@ -68,7 +68,7 @@ var verboseCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(configCmd)
+	RootCmd.AddCommand(configCmd)
 	configCmd.AddCommand(verboseCmd)
 	configCmd.AddCommand(dirCmd)
 	configCmd.AddCommand(showCmd)

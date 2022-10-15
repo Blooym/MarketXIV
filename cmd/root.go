@@ -13,8 +13,8 @@ import (
 	"github.com/spf13/viper"
 )
 
-// rootCmd represents the base command when called without any subcommands
-var rootCmd = &cobra.Command{
+// RootCmd represents the base command when called without any subcommands
+var RootCmd = &cobra.Command{
 	Use:   "marketxiv",
 	Short: "MarketXIV is a command line tool for interacting with the FFXIV Online market via Universalis.",
 	Long: `MarketXIV is a command line tool for interacting with the FFXIV Online market via Universalis. 
@@ -23,7 +23,7 @@ You can view the current market tax rates, or search for an item and view its li
 }
 
 func Execute() {
-	err := rootCmd.Execute()
+	err := RootCmd.Execute()
 	if err != nil {
 		os.Exit(1)
 	}
