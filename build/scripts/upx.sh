@@ -19,7 +19,7 @@ if [ -x "$(command -v upx)" ]; then
     fi
 
     echo "UPX: Compressing $(basename $1)... (this may take a while)."
-    timeout 20m upx $1 --best --ultra-brute
+    timeout 40m upx $1 --best --ultra-brute
     
     # If the compression failed, skip it.
     if [ $? -eq 124 ]; then
