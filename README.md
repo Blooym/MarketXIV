@@ -143,16 +143,13 @@ If you aren't sure on what architecture you need to download, you should try `am
 ---
 
 ### From Source
-Build MarketXIV directly from the GitHub source for any supported platform.
+Build MarketXIV directly from the source for your system. Only recommended for advanced users that prefer to build from source or contributors.
 <details>  
 <summary>Show Steps</summary>
-  
-Building MarketXIV from source is not recommended for beginners, but if you know what you're doing then follow these steps: 
-1. Install [Go](https://go.dev/) on your system
-2. Download the [GoReleaser](https://goreleaser.com/) package
-3. Clone the repository to your system with `git clone https://github.com/BitsOfAByte/marketxiv`
-4. Inside the repository directory, run `goreleaser build --single-target --rm-dist --snapshot` to build.
 
-You will find the compiled binary for your OS & Arch inside of the `/dist` folder.
+1. Make sure you have [Go](https://go.dev/) installed on your system and setup properly, alternatively use the [Devcontainer](./devcontainer) setup.
+2. Install [GoReleaser](https://goreleaser.com/) if you want to build using the supported buildsystem (Optional unless contributing)
+3. Run `make build` to build the binary for your system, or `make build-all` to build for all supported systems. You can optionally use `./build/scripts/upx.sh <file>` to compress the binary with UPX (This is done automatically when using make and having GoReleaser installed with `SKIP_COMPRESS=false` set)
+4. You will find all the binaries in the `./dist` directory alongside any other build artifacts. 
 
 </details>  
