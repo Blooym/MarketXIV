@@ -19,10 +19,15 @@ builds:
       - arm
       - arm64
     ldflags:
-      - -s -w
+      - "-s -w"
       - -X 'github.com/BitsOfAByte/marketxiv/backend.Version={{.Version}}'
       - -X 'github.com/BitsOfAByte/marketxiv/backend.Commit={{.Commit}}'
-      - -X 'github.com/BitsOfAByte/marketxiv/backend.Date={{.Date}}'
+      - -X 'github.com/BitsOfAByte/marketxiv/backend.Date={{.CommitDate}}'
+    mod_timestamp: "{{ .CommitTimestamp }}"
+    hooks:
+      post:
+        - env SKIP_COMPRESS={{ if index .Env "SKIP_COMPRESS"  }}{{ .Env.SKIP_COMPRESS }}{{ else }}false{{ end }} ./build/scripts/upx.sh {{ .Path }}
+
 archives:
   - format: zip
 checksum:
