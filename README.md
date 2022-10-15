@@ -147,7 +147,7 @@ Build MarketXIV directly from the source for your system. Only recommended for a
 <details>  
 <summary>Show Steps</summary>
 
-1. Make sure you have [Go](https://go.dev/) installed on your system and setup properly, alternatively use the [Devcontainer](./devcontainer) setup.
+1. Make sure you have [Go](https://go.dev/) installed on your system and setup properly, alternatively use the [Devcontainer](./.devcontainer) setup.
 2. Install [GoReleaser](https://goreleaser.com/) if you want to build using the supported buildsystem (Optional unless contributing)
 3. Run `make build` to build the binary for your system, or `make build-all` to build for all supported systems. You can optionally use `./build/scripts/upx.sh <file>` to compress the binary with UPX (This is done automatically when using make and having GoReleaser installed with `SKIP_COMPRESS=false` set)
 4. You will find all the binaries in the `./dist` directory alongside any other build artifacts. 
