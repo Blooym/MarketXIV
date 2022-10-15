@@ -27,7 +27,7 @@ jobs:
         with:
           go-version: 1.19
 
-      - id: go-cache-paths
+      - name: Set Go Cache Paths
         run: |
           echo "go_build=$(go env GOCACHE)" >> $GITHUB_ENV
           echo "go_mod=$(go env GOMODCACHE)" >> $GITHUB_ENV
@@ -53,3 +53,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FURY_TOKEN: ${{ secrets.FURY_TOKEN }}
+          SKIP_COMPRESS: false
