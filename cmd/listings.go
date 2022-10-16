@@ -33,16 +33,25 @@ var listingsCmd = &cobra.Command{
 
 		serverName := args[0]
 		itemName := strings.Join(args[1:], " ")
-		searchData := backend.FetchSearch(itemName, "item")
+		var itemID int
 
-		// Check to see if the item exists
-		if len(searchData.Results) == 0 {
-			fmt.Println("No results found for " + itemName)
-			return
+		if _, err := strconv.Atoi(itemName); err != nil {
+
+			searchData := backend.FetchSearch(itemName, "item")
+
+			// Check to see if the item exists
+			if len(searchData.Results) == 0 {
+				fmt.Println("No results found for " + itemName)
+				return
+			}
+
+			resultData := searchData.Results[0]
+			itemID = resultData.ID
+		} else {
+			itemID, _ = strconv.Atoi(itemName)
 		}
 
-		resultData := searchData.Results[0]
-		marketData := backend.FetchMarketItem(serverName, resultData.ID, limit, strconv.FormatBool(hq))
+		marketData := backend.FetchMarketItem(serverName, itemID, limit, strconv.FormatBool(hq))
 
 		if len(marketData.Listings) == 0 {
 			fmt.Println("No listings found for " + itemName)
