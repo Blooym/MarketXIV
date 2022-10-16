@@ -83,6 +83,7 @@ var historyCmd = &cobra.Command{
 			})
 		}
 
+		fmt.Println("Showing history for Item ID " + strconv.Itoa(itemID))
 		table.Render()
 	},
 }

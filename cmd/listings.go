@@ -87,6 +87,7 @@ var listingsCmd = &cobra.Command{
 			})
 		}
 
+		fmt.Println("Showing listings for Item ID " + strconv.Itoa(itemID))
 		table.Render()
 	},
 }
