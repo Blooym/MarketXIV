@@ -54,4 +54,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FURY_TOKEN: ${{ secrets.FURY_TOKEN }}
-          SKIP_COMPRESS: false
+          SKIP_COMPRESS: true
