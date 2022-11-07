@@ -13,7 +13,7 @@ permissions:
 jobs:
   Release:
     runs-on: ubuntu-latest
-    timeout-minutes: 50
+    timeout-minutes: 60
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -50,8 +50,8 @@ jobs:
         with:
           distribution: goreleaser
           version: latest
-          args: release --rm-dist
+          args: release --rm-dist --timeout 60m
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FURY_TOKEN: ${{ secrets.FURY_TOKEN }}
-          SKIP_COMPRESS: true
+          SKIP_COMPRESS: false
