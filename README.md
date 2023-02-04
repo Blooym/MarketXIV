@@ -52,14 +52,14 @@ sudo apt install marketxiv
 
 ---
 
-### Yum/DNF Package Manager
-If you are using Fedora, OpenSUSE, or any other system that supports the yum/dnf package manager then use this installation method.
+### DNF Package Manager
+If you are using Fedora, OpenSUSE, or any other system that supports the DNF package manager then use this installation method.
 
 <details>
 <summary>Show Steps</summary>
 <br>
   
-1. Add the repository hosting MarketXIV to your yum repos directory
+1. Add the repository hosting MarketXIV to your DNF repos directory
 ```
 echo "[BitsOfAByte]            
 name=BitsOfAByte Packages         
@@ -70,12 +70,12 @@ gpgcheck=0" | sudo tee -a /etc/yum.repos.d/bitsofabyte.repo
   
 2. Fetch all sources again to detect the new list
 ```
-sudo yum update
+sudo dnf update
 ```
 
 3. Install MarketXIV to your system
 ```
-sudo yum install marketxiv
+sudo dnf install marketxiv
 ```
 
 </details>  
