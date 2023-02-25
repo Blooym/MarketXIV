@@ -43,7 +43,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Dependency Review
-        uses: actions/dependency-review-action@v1        
+        uses: actions/dependency-review-action@v3
 
   # If all is good, create a preview build for the pull request if needed.
   Preview:
@@ -65,7 +65,7 @@ jobs:
         with:
           distribution: goreleaser
           version: latest
-          args: build --rm-dist --snapshot --timeout 60m
+          args: build --clean --snapshot --timeout 60m
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SKIP_COMPRESS: true
