@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 BitsOfAByte
+Copyright © 2022 Blooym
 
 MIT License, see the LICENSE file for more information.
 */

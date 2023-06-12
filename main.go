@@ -1,13 +1,13 @@
 /*
-Copyright © 2022 BitsOfAByte
+Copyright © 2022 Blooym
 
 */
 
 package main
 
 import (
-	"github.com/BitsOfAByte/marketxiv/backend"
-	"github.com/BitsOfAByte/marketxiv/cmd"
+	"github.com/Blooym/marketxiv/backend"
+	"github.com/Blooym/marketxiv/cmd"
 )
 
 func main() {

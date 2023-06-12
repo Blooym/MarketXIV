@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 BitsOfAByte
+Copyright © 2022 Blooym
 
 MIT License, see the LICENSE file for more information.
 */
@@ -12,7 +12,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/BitsOfAByte/marketxiv/structures"
+	"github.com/Blooym/marketxiv/structures"
 )
 
 // Formats a list of parameters into a query string.

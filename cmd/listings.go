@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 BitsOfAByte
+Copyright © 2022 Blooym
 
 MIT License, see the LICENSE file for more information.
 */
@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/BitsOfAByte/marketxiv/backend"
+	"github.com/Blooym/marketxiv/backend"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 )

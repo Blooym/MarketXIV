@@ -35,7 +35,7 @@ If you are using an Ubuntu-derivative system then use this installation method.
   
 1. Add the repository hosting MarketXIV to your apt sources directory
 ```
-echo "deb [trusted=yes] https://packages.bitsofabyte.dev/apt/ /" | sudo tee -a /etc/apt/sources.list.d/bitsofabyte.list
+echo "deb [trusted=yes] https://packages.blooym.dev/apt/ /" | sudo tee -a /etc/apt/sources.list.d/blooym.list
 ``` 
 
 2. Fetch all sources again to detect the new list
@@ -61,11 +61,11 @@ If you are using Fedora, OpenSUSE, or any other system that supports the DNF pac
   
 1. Add the repository hosting MarketXIV to your DNF repos directory
 ```
-echo "[BitsOfAByte]            
-name=BitsOfAByte Packages         
-baseurl=https://packages.bitsofabyte.dev/yum/
+echo "[Blooym]            
+name=Blooym Packages         
+baseurl=https://packages.blooym.dev/yum/
 enabled=1
-gpgcheck=0" | sudo tee -a /etc/yum.repos.d/bitsofabyte.repo
+gpgcheck=0" | sudo tee -a /etc/yum.repos.d/blooym.repo
 ``` 
   
 2. Fetch all sources again to detect the new list
@@ -93,7 +93,7 @@ If you are using a Windows sytem, then use this installation method.
 1. Install [scoop](https://scoop.sh/) using their guide
 2. Add the bucket for MarketXIV
 ```
-scoop bucket add marketxiv https://github.com/BitsOfAByte/MarketXIV.git
+scoop bucket add marketxiv https://github.com/Blooym/MarketXIV.git
 ```
 3. Install MarketXIV to your system
 ```
@@ -117,7 +117,7 @@ If your distributions package manager is not listed here or you wish to use [Hom
 ```
 2. Add the tap for MarketXIV to homebrew
 ```
-brew tap bitsofabyte/marketxiv https://github.com/BitsOfAByte/marketxiv.git
+brew tap blooym/marketxiv https://github.com/Blooym/marketxiv.git
 ```
 3. Install MarketXIV to your system
 ```
@@ -133,7 +133,7 @@ Manually install the BInary from the release Archives.
 <details>  
 <summary>Show Steps</summary>
   
-1. Download the [newest release](https://github.com/BitsOfAByte/marketxiv/releases/latest) for your system/architecture
+1. Download the [newest release](https://github.com/Blooym/marketxiv/releases/latest) for your system/architecture
 2. Extract the binary into your system path or add the binary to your path.
 
 If you aren't sure on what architecture you need to download, you should try `amd64` first as it is the most common for everyday hardware.

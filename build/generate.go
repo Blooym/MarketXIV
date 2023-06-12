@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 BitsOfAByte
+Copyright © 2022 Blooym
 
 MIT License, see the LICENSE file for more information.
 */
@@ -11,7 +11,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/BitsOfAByte/marketxiv/cmd"
+	"github.com/Blooym/marketxiv/cmd"
 	"github.com/spf13/cobra/doc"
 )
 
@@ -50,17 +50,17 @@ func createBuildFile(fileName string, data string) {
 }
 
 func generateDNFRepoFile() {
-	fileData := `[BitsOfAByte]            
-name=BitsOfAByte Packages         
-baseurl=https://packages.bitsofabyte.dev/yum/
+	fileData := `[Blooym]            
+name=Blooym Packages         
+baseurl=https://packages.blooym.dev/yum/
 enabled=1
 gpgcheck=0`
-	createBuildFile("bitsofabyte.repo", fileData)
+	createBuildFile("blooym.repo", fileData)
 }
 
 func generateAPTRepoFile() {
-	fileData := `deb [trusted=yes] https://packages.bitsofabyte.dev/apt/ /`
-	createBuildFile("bitsofabyte.list", fileData)
+	fileData := `deb [trusted=yes] https://packages.blooym.dev/apt/ /`
+	createBuildFile("blooym.list", fileData)
 }
 
 func generateMANPages() {

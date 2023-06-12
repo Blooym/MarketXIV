@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 BitsOfAByte
+Copyright © 2022 Blooym
 
 MIT License, see the LICENSE file for more information.
 */
@@ -8,7 +8,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/BitsOfAByte/marketxiv/backend"
+	"github.com/Blooym/marketxiv/backend"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

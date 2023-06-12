@@ -1,4 +1,4 @@
-module github.com/BitsOfAByte/marketxiv
+module github.com/Blooym/marketxiv
 
 go 1.17
 

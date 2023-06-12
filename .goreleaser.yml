@@ -20,9 +20,9 @@ builds:
       - arm64
     ldflags:
       - "-s -w"
-      - -X 'github.com/BitsOfAByte/marketxiv/backend.Version={{.Version}}'
-      - -X 'github.com/BitsOfAByte/marketxiv/backend.Commit={{.Commit}}'
-      - -X 'github.com/BitsOfAByte/marketxiv/backend.Date={{.CommitDate}}'
+      - -X 'github.com/Blooym/marketxiv/backend.Version={{.Version}}'
+      - -X 'github.com/Blooym/marketxiv/backend.Commit={{.Commit}}'
+      - -X 'github.com/Blooym/marketxiv/backend.Date={{.CommitDate}}'
     mod_timestamp: "{{ .CommitTimestamp }}"
     hooks:
       post:
@@ -53,7 +53,7 @@ changelog:
 
 brews:
   - tap:
-      owner: BitsOfAByte
+      owner: Blooym
       name: marketxiv
     commit_author:
       name: github-actions
@@ -61,12 +61,12 @@ brews:
     commit_msg_template: "chore: Brew formula update for version {{ .Tag }}"
     description: |
       FFXIV marketboard for your command line
-    homepage: "https://github.com/BitsOfAByte/MarketXIV"
+    homepage: "https://github.com/Blooym/MarketXIV"
     license: "MIT"
 
 scoop:
   bucket:
-    owner: BitsOfAByte
+    owner: Blooym
     name: marketxiv
   commit_author:
     name: github-actions
@@ -74,14 +74,14 @@ scoop:
   commit_msg_template: "chore: Scoop update for version {{ .Tag }}"
   description: |
     FFXIV marketboard for your command line
-  homepage: "https://github.com/BitsOfAByte/MarketXIV"
+  homepage: "https://github.com/Blooym/MarketXIV"
   license: MIT
 
 nfpms:
-  - vendor: BitsOfAByte
+  - vendor: Blooym
     id: nfpm
-    homepage: https://github.com/BitsOfAByte/MarketXIV
-    maintainer: BitsOfAByte
+    homepage: https://github.com/Blooym/MarketXIV
+    maintainer: Blooym
     description: |
       FFXIV marketboard for your command line
     license: MIT
@@ -106,29 +106,29 @@ nfpms:
         dst: /usr/share/man/man1/
 
       # Yum/DNF repository.
-      - src: ./.build_data/bitsofabyte.repo
-        dst: /etc/yum.repos.d/bitsofabyte.repo
+      - src: ./.build_data/blooym.repo
+        dst: /etc/yum.repos.d/blooym.repo
         type: config|noreplace
         packager: rpm
 
       # APT repository.
-      - src: ./.build_data/bitsofabyte.list
-        dst: /etc/apt/sources.list.d/bitsofabyte.list
+      - src: ./.build_data/blooym.list
+        dst: /etc/apt/sources.list.d/blooym.list
         type: config|noreplace
         packager: deb
     rpm:
       compression: xz
 
 publishers:
-  - name: "packages.bitsofabyte.dev"
+  - name: "packages.blooym.dev"
     dir: "{{ dir .ArtifactPath }}"
     ids:
       - nfpm
     cmd: |
-      curl -F package=@{{ .ArtifactName }} https://{{ .Env.FURY_TOKEN }}@push.fury.io/BitsOfAByte/
+      curl -F package=@{{ .ArtifactName }} https://{{ .Env.FURY_TOKEN }}@push.fury.io/Blooym/
 
 release:
   github:
-    owner: BitsOfAByte
+    owner: Blooym
     name: MarketXIV
   prerelease: auto
