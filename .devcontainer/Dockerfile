@@ -1,4 +1,4 @@
-FROM golang:1.19-alpine
+FROM golang:1.21-alpine
 
 # Install Git and OpenSSH.
 RUN apk add --no-cache --update git openssh curl upx

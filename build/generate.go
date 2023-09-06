@@ -1,8 +1,3 @@
-/*
-Copyright © 2022 Blooym
-
-MIT License, see the LICENSE file for more information.
-*/
 package main
 
 import (
@@ -22,8 +17,6 @@ func main() {
 	cleanup()
 	createBuildDir(build_dir)
 
-	generateAPTRepoFile()
-	generateDNFRepoFile()
 	generateMANPages()
 }
 
@@ -47,20 +40,6 @@ func createBuildFile(fileName string, data string) {
 	}
 
 	file.Sync()
-}
-
-func generateDNFRepoFile() {
-	fileData := `[Blooym]            
-name=Blooym Packages         
-baseurl=https://packages.blooym.dev/yum/
-enabled=1
-gpgcheck=0`
-	createBuildFile("blooym.repo", fileData)
-}
-
-func generateAPTRepoFile() {
-	fileData := `deb [trusted=yes] https://packages.blooym.dev/apt/ /`
-	createBuildFile("blooym.list", fileData)
 }
 
 func generateMANPages() {

@@ -1,8 +1,3 @@
-/*
-Copyright © 2022 Blooym
-
-MIT License, see the LICENSE file for more information.
-*/
 package backend
 
 import (

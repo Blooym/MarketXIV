@@ -1,11 +1,7 @@
-/*
-Copyright © 2022 Blooym
-
-MIT License, see the LICENSE file for more information.
-*/
 package backend
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"runtime"
@@ -17,7 +13,7 @@ import (
 func Update(version string) {
 
 	updater, _ := selfupdate.NewUpdater(selfupdate.Config{Validator: &selfupdate.ChecksumValidator{UniqueFilename: "checksums.txt"}})
-	latest, found, err := updater.DetectLatest("Blooym/MarketXIV")
+	latest, found, err := updater.DetectLatest(context.Background(), selfupdate.NewRepositorySlug("Blooym", "marketxiv"))
 
 	// Unknown error occurred, abort update process.
 	if err != nil {
@@ -47,7 +43,7 @@ func Update(version string) {
 	}
 
 	// Perform the update.
-	if err := selfupdate.UpdateTo(latest.AssetURL, latest.AssetName, exe); err != nil {
+	if err := selfupdate.UpdateTo(context.Background(), latest.AssetURL, latest.AssetName, exe); err != nil {
 		Error(fmt.Sprintf("error occurred while updating: %v", err))
 		return
 	}
