@@ -26,22 +26,6 @@ func createBuildDir(dir string) {
 	}
 }
 
-func createBuildFile(fileName string, data string) {
-	file, err := os.Create(build_dir + fileName)
-	if err != nil {
-		panic(err)
-	}
-
-	defer file.Close()
-
-	_, err = file.WriteString(data)
-	if err != nil {
-		panic(err)
-	}
-
-	file.Sync()
-}
-
 func generateMANPages() {
 	// Generate the man pages
 	header := &doc.GenManHeader{
